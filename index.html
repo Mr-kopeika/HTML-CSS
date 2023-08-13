@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grambotica</title>
+  <link rel="stylesheet" href="./style/style.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="sidebar">
+      <img class="logo-image" src="./images/logo-grambotica.svg"/>
+
+      <nav>
+        <a href="#" class="navbar-item active-item">Active Section</a>
+        <a href="#" class="navbar-item">Section</a>
+        <a href="#" class="navbar-item">Section</a>
+        <a href="#" class="navbar-item">Section</a>
+      </nav>
+
+      <button class="exit-button">Exit</button>
+      
+    </div>
+    <header>
+      <div class="back">
+        <img src="./images/back-svgrepo-com.svg" alt="back" class="back-image">
+        <span class="back-text">Back</span>
+      </div>
+      <h1 class="page-name">Create Course</h1>
+    </header>
+    <main>
+      <form class="create-form">
+        <div class="title">
+          <label for="title-input" class="title-label">Title</label>
+          <input type="text" id="title-input">
+          
+        </div>
+
+        <div class="description">
+          <label for="description-input" class="description-label">Description</label>
+          <textarea id="description-input"></textarea>
+          <div class="custom-resizer"></div>
+        </div>
+
+        <div class="type">
+          <label for="type-selector" class="type-label">Type</label>
+          <select id="type-selector">
+            <option>Computer Science</option>
+            <option>Art</option>
+            <option>Music</option>
+          </select>
+        </div>
+
+        <hr/>
+
+        <button class="save-button" type="submit">Save</button>
+      </form>
+    </main>
+
+  </div>
+</body>
+
+</html>

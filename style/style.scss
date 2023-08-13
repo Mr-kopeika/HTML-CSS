@@ -1,0 +1,221 @@
+$sidebar-width: 350px;
+$header-height: 60px;
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a:active, /* активная/посещенная ссылка */
+a:hover,  /* при наведении */
+a {
+  text-decoration: none;
+  color: black;
+}
+
+
+.wrapper {
+
+  display: grid;
+
+
+  grid-template: {
+    columns: $sidebar-width 1fr;
+    rows: $header-height 1fr;
+    areas: "sidebar header"
+           "sidebar content";
+  }
+
+  .sidebar {
+    line-height: 50px;
+    font-size: 22px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 2px solid rgba(21, 63, 80, 0.548);
+
+    grid-area: sidebar;
+    height: 100vh;
+    background-color: rgb(182, 248, 228);
+    
+    .logo-image {
+      width: 80%;
+      margin: calc(($sidebar-width - 80%) / 2);
+    }
+
+    nav {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      width: 100%;
+      
+
+      .navbar-item {
+        width: 80%;
+        height: 50px;
+        background-color: rgb(190, 255, 255);
+        border-radius: 7px;
+        border: 1px solid rgb(113, 197, 197)
+      }
+
+      .active-item {
+        background-color: rgb(152, 252, 252);
+      }
+    }
+
+    .exit-button {
+      width: 80%;
+      height: 50px;
+      margin: auto 0 calc(($sidebar-width - 80%) / 2);
+      border-radius: 7px;
+      border: 1px solid rgb(113, 197, 197);
+      font-size: 22px;
+      background-color: rgb(152, 252, 252);
+    }
+  }
+  
+  header {
+    grid-area: header;
+    background-color: rgb(159, 255, 255);
+    border-bottom: 2px solid rgba(21, 63, 80, 0.548);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+
+    
+
+    .back {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      left: 20px;
+      gap: 10px;
+
+      .back-image {
+        width: 20px;
+      }
+    }
+    
+    .page-name, .back {
+      font-size: 20px;
+      font-weight: normal;
+    }
+  }
+
+  main {
+    grid-area: content;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      margin-top: 30px;
+      
+
+      button {
+        width: calc((100vw - $sidebar-width) / 3);
+        max-width: 600px;
+        margin-right: 33.333%;
+        height: 40px;
+        border: 1px solid black;
+        border-radius: 7px;
+        background-color: aquamarine;
+        box-sizing: border-box;
+      }
+
+      .description {
+        position: relative;
+      }
+
+      div {
+        
+        margin-right: 33.333%;
+        padding-top: 20px;
+
+        #title-input, #description-input, #type-selector {
+          height: 40px;
+          min-width: 250px;
+          max-width: 600px;
+          width: calc((100vw - $sidebar-width) / 3);
+          border: 1px solid black;
+          border-radius: 7px;
+          margin-left: 5px;
+          box-sizing: border-box;
+          padding: 10px;
+        }
+
+        textarea {
+          resize: vertical;
+          
+
+          &::-webkit-resizer {
+            display: none;
+            
+          }
+        }
+
+
+
+        .custom-resizer {
+          
+          margin: 0;
+          padding: 0;
+          width: 10px;
+          height: 10px;
+          background-color: rgb(161, 236, 211);
+          border-radius: 5px;
+          position: absolute;
+          bottom: 5px;
+          right: 5px;
+          pointer-events: none;
+        }
+
+        #type-selector {
+          appearance: none;
+
+          background: {
+            image: url(../images/back-down.svg);
+            repeat: no-repeat;
+            size: 20px;
+            position: calc(100% - 10px);
+          }
+        }
+
+        
+
+        #description-input {
+          vertical-align: top;
+          height: 120px;
+          border-radius: 10px;
+        }
+      }
+
+      hr {
+        width: 100%;
+        margin: 50px 0;
+      }
+
+    }
+  }
+}
+
+@media screen and (min-width: 2150px) {
+
+
+  .wrapper {
+
+    main {
+
+      form {
+
+        .save-button, div {
+          margin-right: calc((100vw - $sidebar-width - 600px) / 2);
+        }
+      }
+    }
+  }
+}
