@@ -1,13 +1,18 @@
 $sidebar-width: 350px;
 $header-height: 60px;
 
+@use "_mixins.scss";
+
+@include mixins.add-font('Preahvihear', 'preahvihear');
+
 * {
   margin: 0;
   padding: 0;
+  font-family: 'Preahvihear';
 }
 
-a:active, /* активная/посещенная ссылка */
-a:hover,  /* при наведении */
+a:active,
+a:hover,
 a {
   text-decoration: none;
   color: black;
@@ -23,7 +28,7 @@ a {
     columns: $sidebar-width 1fr;
     rows: $header-height 1fr;
     areas: "sidebar header"
-           "sidebar content";
+      "sidebar content";
   }
 
   .sidebar {
@@ -38,7 +43,7 @@ a {
     grid-area: sidebar;
     height: 100vh;
     background-color: rgb(182, 248, 228);
-    
+
     .logo-image {
       width: 80%;
       margin: calc(($sidebar-width - 80%) / 2);
@@ -50,7 +55,7 @@ a {
       gap: 20px;
       align-items: center;
       width: 100%;
-      
+
 
       .navbar-item {
         width: 80%;
@@ -75,7 +80,7 @@ a {
       background-color: rgb(152, 252, 252);
     }
   }
-  
+
   header {
     grid-area: header;
     background-color: rgb(159, 255, 255);
@@ -86,7 +91,7 @@ a {
     position: relative;
 
 
-    
+
 
     .back {
       display: flex;
@@ -99,8 +104,9 @@ a {
         width: 20px;
       }
     }
-    
-    .page-name, .back {
+
+    .page-name,
+    .back {
       font-size: 20px;
       font-weight: normal;
     }
@@ -114,7 +120,7 @@ a {
       flex-direction: column;
       align-items: flex-end;
       margin-top: 30px;
-      
+
 
       button {
         width: calc((100vw - $sidebar-width) / 3);
@@ -125,6 +131,10 @@ a {
         border-radius: 7px;
         background-color: aquamarine;
         box-sizing: border-box;
+
+        @media screen and (min-width: 2150px) {
+          margin-right: calc((100vw - $sidebar-width - 600px) / 2);
+        }
       }
 
       .description {
@@ -132,11 +142,17 @@ a {
       }
 
       div {
-        
+
         margin-right: 33.333%;
         padding-top: 20px;
 
-        #title-input, #description-input, #type-selector {
+        @media screen and (min-width: 2150px) {
+          margin-right: calc((100vw - $sidebar-width - 600px) / 2);
+        }
+
+        .title-input,
+        .description-input,
+        .type-selector {
           height: 40px;
           min-width: 250px;
           max-width: 600px;
@@ -150,18 +166,18 @@ a {
 
         textarea {
           resize: vertical;
-          
+
 
           &::-webkit-resizer {
             display: none;
-            
+
           }
         }
 
 
 
         .custom-resizer {
-          
+
           margin: 0;
           padding: 0;
           width: 10px;
@@ -174,7 +190,7 @@ a {
           pointer-events: none;
         }
 
-        #type-selector {
+        .type-selector {
           appearance: none;
 
           background: {
@@ -185,9 +201,9 @@ a {
           }
         }
 
-        
 
-        #description-input {
+
+        .description-input {
           vertical-align: top;
           height: 120px;
           border-radius: 10px;
@@ -199,23 +215,6 @@ a {
         margin: 50px 0;
       }
 
-    }
-  }
-}
-
-@media screen and (min-width: 2150px) {
-
-
-  .wrapper {
-
-    main {
-
-      form {
-
-        .save-button, div {
-          margin-right: calc((100vw - $sidebar-width - 600px) / 2);
-        }
-      }
     }
   }
 }

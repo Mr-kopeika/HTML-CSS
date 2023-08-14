@@ -1,6 +1,13 @@
+@font-face {
+  font-family: "Preahvihear";
+  src: url("../fonts/preahvihear.woff2") format("woff2"), url("../fonts/preahvihear.woff") format("woff"), url("../fonts/preahvihear.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 * {
   margin: 0;
   padding: 0;
+  font-family: "Preahvihear";
 }
 
 a:active,
@@ -77,7 +84,8 @@ a {
 .wrapper header .back .back-image {
   width: 20px;
 }
-.wrapper header .page-name, .wrapper header .back {
+.wrapper header .page-name,
+.wrapper header .back {
   font-size: 20px;
   font-weight: normal;
 }
@@ -100,6 +108,11 @@ a {
   background-color: aquamarine;
   box-sizing: border-box;
 }
+@media screen and (min-width: 2150px) {
+  .wrapper main form button {
+    margin-right: calc((100vw - 350px - 600px) / 2);
+  }
+}
 .wrapper main form .description {
   position: relative;
 }
@@ -107,7 +120,14 @@ a {
   margin-right: 33.333%;
   padding-top: 20px;
 }
-.wrapper main form div #title-input, .wrapper main form div #description-input, .wrapper main form div #type-selector {
+@media screen and (min-width: 2150px) {
+  .wrapper main form div {
+    margin-right: calc((100vw - 350px - 600px) / 2);
+  }
+}
+.wrapper main form div .title-input,
+.wrapper main form div .description-input,
+.wrapper main form div .type-selector {
   height: 40px;
   min-width: 250px;
   max-width: 600px;
@@ -136,7 +156,7 @@ a {
   right: 5px;
   pointer-events: none;
 }
-.wrapper main form div #type-selector {
+.wrapper main form div .type-selector {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -145,7 +165,7 @@ a {
   background-size: 20px;
   background-position: calc(100% - 10px);
 }
-.wrapper main form div #description-input {
+.wrapper main form div .description-input {
   vertical-align: top;
   height: 120px;
   border-radius: 10px;
@@ -153,10 +173,4 @@ a {
 .wrapper main form hr {
   width: 100%;
   margin: 50px 0;
-}
-
-@media screen and (min-width: 2150px) {
-  .wrapper main form .save-button, .wrapper main form div {
-    margin-right: calc((100vw - 350px - 600px) / 2);
-  }
 }/*# sourceMappingURL=style.css.map */
