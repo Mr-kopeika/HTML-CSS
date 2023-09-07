@@ -1,9 +1,13 @@
-$sidebar-width: 350px;
-$header-height: 60px;
-
 @use "_mixins.scss";
 
 @include mixins.add-font('Preahvihear', 'preahvihear');
+
+
+html {
+  --sidebar-width: 350px;
+  --header-height: 60px;
+}
+
 
 * {
   margin: 0;
@@ -18,6 +22,16 @@ a {
   color: black;
 }
 
+button {
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+  
+}
 
 .wrapper {
 
@@ -25,8 +39,8 @@ a {
 
 
   grid-template: {
-    columns: $sidebar-width 1fr;
-    rows: $header-height 1fr;
+    columns: var(--sidebar-width) 1fr;
+    rows: var(--header-height) 1fr;
     areas: "sidebar header"
       "sidebar content";
   }
@@ -44,10 +58,35 @@ a {
     height: 100vh;
     background-color: rgb(182, 248, 228);
 
-    .logo-image {
+    .collapse-wrapper {
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 20px;
+      gap: 15px;
       width: 80%;
-      margin: calc(($sidebar-width - 80%) / 2);
+
+
+      .logo-image {
+        width: 70%;
+        margin: 0;
+      }
+
+      .close-sidebar-button {
+        height: 40px;
+        background-color: transparent;
+        border: none;
+        font-size: 22px;
+
+        .collapse-icon-close {
+          width: 40px;
+        }
+      }
+
     }
+
+
 
     nav {
       display: flex;
@@ -58,11 +97,12 @@ a {
 
 
       .navbar-item {
+        font-size: 22px;
         width: 80%;
         height: 50px;
         background-color: rgb(190, 255, 255);
         border-radius: 7px;
-        border: 1px solid rgb(113, 197, 197)
+        border: 1px solid rgb(113, 197, 197);
       }
 
       .active-item {
@@ -73,12 +113,24 @@ a {
     .exit-button {
       width: 80%;
       height: 50px;
-      margin: auto 0 calc(($sidebar-width - 80%) / 2);
+      margin: auto 0 calc((var(--sidebar-width) - 80%) / 2);
       border-radius: 7px;
       border: 1px solid rgb(113, 197, 197);
       font-size: 22px;
       background-color: rgb(152, 252, 252);
     }
+  }
+
+  .sidebar-close {
+
+
+    
+    .logo-image {
+      display: none;
+    }
+
+
+
   }
 
   header {
@@ -97,8 +149,13 @@ a {
       display: flex;
       align-items: center;
       position: absolute;
-      left: 20px;
+      left: 0;
       gap: 10px;
+      height: 100%;
+      padding: 0 20px;
+
+      background: transparent;
+      border: none;
 
       .back-image {
         width: 20px;
@@ -120,34 +177,45 @@ a {
       flex-direction: column;
       align-items: flex-end;
       margin-top: 30px;
+      min-width: 500px;
 
+      .button-wrapper,
+      >div {
 
-      button {
-        width: calc((100vw - $sidebar-width) / 3);
-        max-width: 600px;
-        margin-right: 33.333%;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 250px 1fr;
+      }
+
+      .save-button {
+        grid-column-start: 2;
+        grid-column-end: 2;
+
+        width: 250px;
         height: 40px;
         border: 1px solid black;
         border-radius: 7px;
         background-color: aquamarine;
         box-sizing: border-box;
-
-        @media screen and (min-width: 2150px) {
-          margin-right: calc((100vw - $sidebar-width - 600px) / 2);
-        }
       }
 
       .description {
         position: relative;
       }
 
-      div {
+      >div {
 
-        margin-right: 33.333%;
+
         padding-top: 20px;
 
-        @media screen and (min-width: 2150px) {
-          margin-right: calc((100vw - $sidebar-width - 600px) / 2);
+        :first-child {
+          justify-self: end;
+          margin-right: 10px;
+        }
+
+        .title-label,
+        .type-label {
+          align-self: center;
         }
 
         .title-input,
@@ -155,11 +223,8 @@ a {
         .type-selector {
           height: 40px;
           min-width: 250px;
-          max-width: 600px;
-          width: calc((100vw - $sidebar-width) / 3);
           border: 1px solid black;
           border-radius: 7px;
-          margin-left: 5px;
           box-sizing: border-box;
           padding: 10px;
         }
@@ -174,19 +239,24 @@ a {
           }
         }
 
-
-
         .custom-resizer {
+
+          grid-column-start: 2;
+          grid-column-end: 2;
 
           margin: 0;
           padding: 0;
+
           width: 10px;
           height: 10px;
+
           background-color: rgb(161, 236, 211);
           border-radius: 5px;
+
           position: absolute;
           bottom: 5px;
           right: 5px;
+
           pointer-events: none;
         }
 

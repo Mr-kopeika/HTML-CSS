@@ -4,6 +4,11 @@
   font-weight: normal;
   font-style: normal;
 }
+html {
+  --sidebar-width: 350px;
+  --header-height: 60px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -17,10 +22,17 @@ a {
   color: black;
 }
 
+button:hover {
+  transform: scale(1.1);
+}
+button:active {
+  transform: scale(0.9);
+}
+
 .wrapper {
   display: grid;
-  grid-template-columns: 350px 1fr;
-  grid-template-rows: 60px 1fr;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-rows: var(--header-height) 1fr;
   grid-template-areas: "sidebar header" "sidebar content";
 }
 .wrapper .sidebar {
@@ -35,9 +47,26 @@ a {
   height: 100vh;
   background-color: rgb(182, 248, 228);
 }
-.wrapper .sidebar .logo-image {
+.wrapper .sidebar .collapse-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px;
+  gap: 15px;
   width: 80%;
-  margin: calc((350px - 80%) / 2);
+}
+.wrapper .sidebar .collapse-wrapper .logo-image {
+  width: 70%;
+  margin: 0;
+}
+.wrapper .sidebar .collapse-wrapper .close-sidebar-button {
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  font-size: 22px;
+}
+.wrapper .sidebar .collapse-wrapper .close-sidebar-button .collapse-icon-close {
+  width: 40px;
 }
 .wrapper .sidebar nav {
   display: flex;
@@ -47,6 +76,7 @@ a {
   width: 100%;
 }
 .wrapper .sidebar nav .navbar-item {
+  font-size: 22px;
   width: 80%;
   height: 50px;
   background-color: rgb(190, 255, 255);
@@ -59,11 +89,14 @@ a {
 .wrapper .sidebar .exit-button {
   width: 80%;
   height: 50px;
-  margin: auto 0 calc((350px - 80%) / 2);
+  margin: auto 0 calc((var(--sidebar-width) - 80%) / 2);
   border-radius: 7px;
   border: 1px solid rgb(113, 197, 197);
   font-size: 22px;
   background-color: rgb(152, 252, 252);
+}
+.wrapper .sidebar-close .logo-image {
+  display: none;
 }
 .wrapper header {
   grid-area: header;
@@ -78,8 +111,12 @@ a {
   display: flex;
   align-items: center;
   position: absolute;
-  left: 20px;
+  left: 0;
   gap: 10px;
+  height: 100%;
+  padding: 0 20px;
+  background: transparent;
+  border: none;
 }
 .wrapper header .back .back-image {
   width: 20px;
@@ -97,54 +134,57 @@ a {
   flex-direction: column;
   align-items: flex-end;
   margin-top: 30px;
+  min-width: 500px;
 }
-.wrapper main form button {
-  width: calc((100vw - 350px) / 3);
-  max-width: 600px;
-  margin-right: 33.333%;
+.wrapper main form .button-wrapper,
+.wrapper main form > div {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 250px 1fr;
+}
+.wrapper main form .save-button {
+  grid-column-start: 2;
+  grid-column-end: 2;
+  width: 250px;
   height: 40px;
   border: 1px solid black;
   border-radius: 7px;
   background-color: aquamarine;
   box-sizing: border-box;
 }
-@media screen and (min-width: 2150px) {
-  .wrapper main form button {
-    margin-right: calc((100vw - 350px - 600px) / 2);
-  }
-}
 .wrapper main form .description {
   position: relative;
 }
-.wrapper main form div {
-  margin-right: 33.333%;
+.wrapper main form > div {
   padding-top: 20px;
 }
-@media screen and (min-width: 2150px) {
-  .wrapper main form div {
-    margin-right: calc((100vw - 350px - 600px) / 2);
-  }
+.wrapper main form > div :first-child {
+  justify-self: end;
+  margin-right: 10px;
 }
-.wrapper main form div .title-input,
-.wrapper main form div .description-input,
-.wrapper main form div .type-selector {
+.wrapper main form > div .title-label,
+.wrapper main form > div .type-label {
+  align-self: center;
+}
+.wrapper main form > div .title-input,
+.wrapper main form > div .description-input,
+.wrapper main form > div .type-selector {
   height: 40px;
   min-width: 250px;
-  max-width: 600px;
-  width: calc((100vw - 350px) / 3);
   border: 1px solid black;
   border-radius: 7px;
-  margin-left: 5px;
   box-sizing: border-box;
   padding: 10px;
 }
-.wrapper main form div textarea {
+.wrapper main form > div textarea {
   resize: vertical;
 }
-.wrapper main form div textarea::-webkit-resizer {
+.wrapper main form > div textarea::-webkit-resizer {
   display: none;
 }
-.wrapper main form div .custom-resizer {
+.wrapper main form > div .custom-resizer {
+  grid-column-start: 2;
+  grid-column-end: 2;
   margin: 0;
   padding: 0;
   width: 10px;
@@ -156,7 +196,7 @@ a {
   right: 5px;
   pointer-events: none;
 }
-.wrapper main form div .type-selector {
+.wrapper main form > div .type-selector {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -165,7 +205,7 @@ a {
   background-size: 20px;
   background-position: calc(100% - 10px);
 }
-.wrapper main form div .description-input {
+.wrapper main form > div .description-input {
   vertical-align: top;
   height: 120px;
   border-radius: 10px;

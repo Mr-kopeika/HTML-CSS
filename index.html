@@ -8,58 +8,67 @@
   <link rel="stylesheet" href="./style/style.css">
 </head>
 
-<body>
-  <div class="wrapper">
-    <div class="sidebar">
-      <img class="logo-image" src="./images/logo-grambotica.svg"/>
-
-      <nav>
-        <a href="#" class="navbar-item active-item">Active Section</a>
-        <a href="#" class="navbar-item">Section</a>
-        <a href="#" class="navbar-item">Section</a>
-        <a href="#" class="navbar-item">Section</a>
-      </nav>
-
-      <button class="exit-button" type="button">Exit</button>
-      
-    </div>
-    <header>
-      <div class="back">
-        <img src="./images/back-svgrepo-com.svg" alt="back" class="back-image">
-        <span class="back-text">Back</span>
+<body class="wrapper">
+  <div class="sidebar">
+      <div class="collapse-wrapper">
+        <img class="logo-image" src="./images/logo-grambotica.svg" />
+      <button type="button" class="close-sidebar-button">
+        <img class="collapse-icon-close" src="./images/collapse-icon-close.svg"/>
+      </button>
       </div>
-      <h1 class="page-name">Create Course</h1>
-    </header>
-    <main>
-      <form class="create-form">
-        <div class="title">
-          <label for="title-input" class="title-label">Title</label>
-          <input type="text" id="title-input" class="title-input">
-          
-        </div>
 
-        <div class="description">
-          <label for="description-input" class="description-label">Description</label>
-          <textarea id="description-input" class="description-input"></textarea>
-          <div class="custom-resizer"></div>
-        </div>
+    <nav>
+      <button type="button" class="navbar-item active-item" value="Create Course">Create Course</button>
+      <button type="button" class="navbar-item" value="Profile">Profile</button>
+      <button type="button" class="navbar-item" value="Statistics">Statistics</button>
+      <button type="button" class="navbar-item" value="Settings">Settings</button>
+    </nav>
 
-        <div class="type">
-          <label for="type-selector" class="type-label">Type</label>
-          <select id="type-selector" class="type-selector">
-            <option>Computer Science</option>
-            <option>Art</option>
-            <option>Music</option>
-          </select>
-        </div>
-
-        <hr/>
-
-        <button class="save-button" type="submit">Save</button>
-      </form>
-    </main>
+    <button class="exit-button" type="button">Exit</button>
 
   </div>
+
+  <header>
+    <button class="back" type="button">
+      <img src="./images/back-svgrepo-com.svg" alt="back" class="back-image">
+      <span class="back-text">Back</span>
+    </button>
+    <h1 class="page-name">Create Course</h1>
+  </header>
+
+  <main>
+    <form class="create-form">
+      <div class="title">
+        <label for="title-input" class="title-label">Title</label>
+        <input type="text" id="title-input" class="title-input">
+
+      </div>
+
+      <div class="description">
+        <label for="description-input" class="description-label">Description</label>
+        <textarea id="description-input" class="description-input"></textarea>
+        <div class="custom-resizer"></div>
+      </div>
+
+      <div class="type">
+        <label for="type-selector" class="type-label">Type</label>
+        <select id="type-selector" class="type-selector">
+          <option>Computer Science</option>
+          <option>Art</option>
+          <option>Music</option>
+        </select>
+      </div>
+
+      <hr />
+
+      <div class="button-wrapper">
+        <button class="save-button" type="submit">Save</button>
+      </div>
+    </form>
+  </main>
+
+  <script type="module" src="./scripts/main.js"></script>
+
 </body>
 
 </html>
