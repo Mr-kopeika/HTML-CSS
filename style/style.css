@@ -43,6 +43,8 @@ button:active {
   flex-direction: column;
   align-items: center;
   border-right: 2px solid rgba(21, 63, 80, 0.548);
+  position: sticky;
+  top: 0;
   grid-area: sidebar;
   height: 100vh;
   background-color: rgb(182, 248, 228);
@@ -105,7 +107,9 @@ button:active {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 .wrapper header .back {
   display: flex;
@@ -162,6 +166,12 @@ button:active {
   justify-self: end;
   margin-right: 10px;
 }
+.wrapper main form > div .invalid {
+  align-self: center;
+  font-size: 14px;
+  color: red;
+  margin-left: 10px;
+}
 .wrapper main form > div .title-label,
 .wrapper main form > div .type-label {
   align-self: center;
@@ -210,7 +220,36 @@ button:active {
   height: 120px;
   border-radius: 10px;
 }
+.wrapper main form > div .description-input ~ .invalid {
+  align-self: start;
+}
 .wrapper main form hr {
   width: 100%;
   margin: 50px 0;
+}
+.wrapper .courses {
+  background-color: rgb(145, 218, 218);
+  width: 70%;
+  max-width: 1200px;
+  margin: 50px auto;
+  border: 2px solid rgb(82, 133, 133);
+  border-radius: 5px;
+  border-collapse: collapse;
+}
+.wrapper .courses .number {
+  min-width: 20px;
+}
+.wrapper .courses .type {
+  min-width: 100px;
+}
+.wrapper .courses .title {
+  min-width: 150px;
+}
+.wrapper .courses th, .wrapper .courses td {
+  border: 1px solid rgb(82, 133, 133);
+  height: 30px;
+  padding: 5px;
+}
+.wrapper .courses td {
+  vertical-align: top;
 }/*# sourceMappingURL=style.css.map */

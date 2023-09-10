@@ -53,6 +53,8 @@ button {
     flex-direction: column;
     align-items: center;
     border-right: 2px solid rgba(21, 63, 80, 0.548);
+    position: sticky;
+    top: 0;
 
     grid-area: sidebar;
     height: 100vh;
@@ -122,15 +124,10 @@ button {
   }
 
   .sidebar-close {
-
-
     
     .logo-image {
       display: none;
     }
-
-
-
   }
 
   header {
@@ -140,7 +137,9 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 
 
 
@@ -203,7 +202,7 @@ button {
         position: relative;
       }
 
-      >div {
+      > div {
 
 
         padding-top: 20px;
@@ -211,6 +210,15 @@ button {
         :first-child {
           justify-self: end;
           margin-right: 10px;
+        }
+
+        .invalid {
+          align-self: center;
+
+          font-size: 14px;
+          color: red;
+          
+          margin-left: 10px;
         }
 
         .title-label,
@@ -277,6 +285,10 @@ button {
           vertical-align: top;
           height: 120px;
           border-radius: 10px;
+
+          ~ .invalid {
+            align-self: start;
+          }
         }
       }
 
@@ -287,4 +299,38 @@ button {
 
     }
   }
+
+  .courses {
+    background-color: rgb(145, 218, 218);;
+    width: 70%;
+    max-width: 1200px;
+    margin: 50px auto;
+    border: 2px solid rgb(82, 133, 133);
+    border-radius: 5px;
+    border-collapse: collapse;
+
+
+    .number {
+      min-width: 20px;
+    }
+
+    .type {
+      min-width: 100px;
+    }
+
+    .title {
+      min-width: 150px;
+    }
+
+    th, td {
+      border: 1px solid rgb(82, 133, 133);
+      height: 30px;
+      padding: 5px;
+    }
+
+    td {
+      vertical-align: top;
+    }
+  }
+
 }

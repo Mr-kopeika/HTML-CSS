@@ -10,18 +10,19 @@
 
 <body class="wrapper">
   <div class="sidebar">
-      <div class="collapse-wrapper">
-        <img class="logo-image" src="./images/logo-grambotica.svg" />
+    <div class="collapse-wrapper">
+      <img class="logo-image" src="./images/logo-grambotica.svg" />
       <button type="button" class="close-sidebar-button">
-        <img class="collapse-icon-close" src="./images/collapse-icon-close.svg"/>
+        <img class="collapse-icon-close" src="./images/collapse-icon-close.svg" />
       </button>
-      </div>
+    </div>
 
     <nav>
-      <button type="button" class="navbar-item active-item" value="Create Course">Create Course</button>
-      <button type="button" class="navbar-item" value="Profile">Profile</button>
-      <button type="button" class="navbar-item" value="Statistics">Statistics</button>
-      <button type="button" class="navbar-item" value="Settings">Settings</button>
+      <button type="button" class="navbar-item active-item" data-name="Create Course">
+        Create Course</button>
+      <button type="button" class="navbar-item" data-name="Profile">Profile</button>
+      <button type="button" class="navbar-item" data-name="Statistics">Statistics</button>
+      <button type="button" class="navbar-item" data-name="Settings">Settings</button>
     </nav>
 
     <button class="exit-button" type="button">Exit</button>
@@ -37,7 +38,7 @@
   </header>
 
   <main>
-    <form class="create-form">
+    <form class="create-form" name="create-form">
       <div class="title">
         <label for="title-input" class="title-label">Title</label>
         <input type="text" id="title-input" class="title-input">
@@ -48,6 +49,7 @@
         <label for="description-input" class="description-label">Description</label>
         <textarea id="description-input" class="description-input"></textarea>
         <div class="custom-resizer"></div>
+
       </div>
 
       <div class="type">
@@ -65,6 +67,18 @@
         <button class="save-button" type="submit">Save</button>
       </div>
     </form>
+
+    <table class="courses">
+      <tbody>
+        <tr>
+          <th class="number">№</th>
+          <th class="type">Type</th>
+          <th class="title">Title</th>
+          <th class="description">Description</th>
+        </tr>
+      </tbody>
+    </table>
+
   </main>
 
   <script type="module" src="./scripts/main.js"></script>
