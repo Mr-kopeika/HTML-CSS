@@ -171,6 +171,8 @@ function removeInvalid() {
 
 function saveForm() {
   let table = document.querySelector('table.courses');
+  table.style.visibility = 'visible';
+
   let form = document.forms['create-form'];
   let title = form.elements[0];
   let description = form.elements[1];
@@ -213,6 +215,7 @@ function resetApplication() {
   navigationHistory = [currentPage];
   formCounter = 0;
 
+  document.querySelector('table.courses').style.visibility = 'hidden';
 }
 
 function selectType (event) {
