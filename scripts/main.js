@@ -223,11 +223,11 @@ function selectType (event) {
       document.querySelector('.title-label').textContent = 'Title*';
       document.querySelector('.description-label').textContent = 'Description*';
       break;
-    case 'Music':
+    case 'Art':
       document.querySelector('.title-label').textContent = 'Title*';
       document.querySelector('.description-label').textContent = 'Description';
       break;
-    case 'Art':
+    case 'Music':
       document.querySelector('.title-label').textContent = 'Title';
       document.querySelector('.description-label').textContent = 'Description*';
       break
