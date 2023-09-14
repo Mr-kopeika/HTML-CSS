@@ -1,33 +1,30 @@
 'use strict';
 
+import createFormValidate from "./validation.js";
 
-let currentPage = document.querySelector('.active-item');
+const activePage = 'active-item';
+
+let currentPage = document.querySelector('#navbar > button');
 let navigationHistory = [currentPage];
 let isOpen = true;
 let formCounter = 0;
 
 
-let sidebar = document.querySelector('.sidebar');
-sidebar.addEventListener('click', changePage);
+let navbar = document.getElementById('navbar');
+navbar.addEventListener('click', changePage);
 
-let back = document.querySelector('.back');
+let back = document.getElementById('back-button');
 back.addEventListener('click', backPage);
 
-let collapse = document.querySelector('.collapse-icon-close');
-collapse.addEventListener('click', collapseSidebar);
+let createForm = document.forms['create-form'];
+createForm.addEventListener('submit', formSubmit);
+createForm.addEventListener('input', removeInvalid);
 
-let createForm = document.forms['create-form']
-createForm.addEventListener('submit', validationCreateForm);
-
-for (let formElement of createForm.elements) {
-  formElement.addEventListener('input', removeInvalid);
-}
-
-let select = document.querySelector('.type-selector');
+let select = createForm.elements.type;
 select.addEventListener('change', selectType);
 
-let resetButton = document.querySelector('.exit-button');
-resetButton.addEventListener('click', resetApplication);
+let exitButton = document.getElementById('exit');
+exitButton.addEventListener('click', resetApplication);
 
 
 
@@ -36,23 +33,35 @@ select.dispatchEvent(selectEvent);
 
 
 
+function changeCurrentPage(page) {
+  currentPage.classList.remove(activePage);
+  currentPage = page;
+  currentPage.classList.add(activePage);
+}
+
+function setPageTitle(title) {
+  document.getElementById('page-title').textContent = title;
+}
+
 function changePage(event) {
 
-  let page = event.target;
+  let page = event.target.closest('button');
 
-  if (!page
-    || !(page.classList.contains('navbar-item'))
-    || page.classList.contains('active-item')) {
+
+  //Существует, не текущая страница, находится внутри навигационной панели
+  if (!event.target
+    || !navbar.contains(page)) {
     return;
   }
 
-  let title = document.querySelector('.page-name');
-  title.textContent = page.dataset.name;
+  page.querySelector('output').textContent += '+';
 
-  currentPage.classList.remove('active-item');
-  page.classList.add('active-item');
+  if (page == currentPage) return;
 
-  currentPage = page;
+  setPageTitle(page.dataset.name);
+  changeCurrentPage(page);
+
+
   navigationHistory.push(currentPage);
 }
 
@@ -62,177 +71,130 @@ function backPage() {
     return;
   };
 
-  let pageName = document.querySelector('.page-name');
-
   navigationHistory.pop();
 
-  currentPage.classList.remove('active-item');
-  currentPage = navigationHistory[navigationHistory.length - 1];
-  currentPage.classList.add('active-item');
+  let page = navigationHistory[navigationHistory.length - 1];
 
-  pageName.textContent = currentPage.dataset.name;
+  changeCurrentPage(page);
+  setPageTitle(currentPage.dataset.name);
 
   window.scrollTo(0, 0);
 }
 
-function collapseSidebar() {
-
-  let pages = document.querySelectorAll('.navbar-item');
-  let exit = document.querySelector('.exit-button');
-
-
-  if (isOpen) {
-    document.documentElement.style.setProperty('--sidebar-width', '50px');
-
-
-    for (let i = 0; i < pages.length; i++) {
-      pages[i].textContent = i + 1;
-    }
-
-    exit.textContent = 'E';
-
-  } else {
-    document.documentElement.style.setProperty('--sidebar-width', '350px');
-
-    for (let page of pages) {
-      page.textContent = page.dataset.name;
-    }
-
-    exit.textContent = 'Exit';
-  }
-
-  document.querySelector('.sidebar').classList.toggle('sidebar-close');
-  isOpen = !isOpen;
-}
-
-function validationCreateForm(event) {
-
-  event.preventDefault();
-
-  let form = event.target;
-  let title = form[0];
-  let description = form[1];
-  let type = form[2];
-  let button = form[3];
-
-
-  let promise = new Promise((resolve) => {
-
-    setTimeout(() => { resolve() }, 2000);
-    button.textContent = 'Loading...';
-  })
-
-  promise.then(() => {
-    switch (type.value) {
-      case 'Computer Science':
-        if (!title.value && !form.querySelector('.title > .invalid')) {
-          createInvalid('.create-form .title', 'Required!');
-        }
-        if (!description.value && !form.querySelector('.description > .invalid')) {
-          createInvalid('.create-form .description', 'Required!');
-        }
-
-        if (title.value && description.value) {
-          saveForm();
-        }
-        break;
-      case 'Art':
-        if (!title.value && !form.querySelector('.title > .invalid')) {
-          createInvalid('.create-form .title', 'Required!');
-        } else saveForm();
-        break;
-      case 'Music':
-        if (!description.value && !form.querySelector('.description > .invalid')) {
-          createInvalid('.create-form .description', 'Required!');
-        } else saveForm();
-        break;
-      default:
-        if (!type.value && !form.querySelector('.type > .invalid')) {
-          createInvalid('.create-form .type', 'Choose, please!');
-        }
-    }
-    button.textContent = 'Save';
-  })
-
-}
-
-function createInvalid(selector, text) {
-  document
-    .querySelector(selector)
-    .insertAdjacentHTML('beforeend', `<p class="invalid">${text}</p>`);
+function createInvalid(element, text) {
+  element.insertAdjacentHTML('beforeend', `<p class="invalid">${text}</p>`);
 }
 
 function removeInvalid() {
-  let invalids = document.forms['create-form'].querySelectorAll('.invalid');
+  let invalids = createForm.querySelectorAll('form label ~ p');
   for (let invalid of invalids) {
     invalid.remove();
   }
 }
 
-function saveForm() {
-  let table = document.querySelector('table.courses');
+function formSubmit(event) {
+
+  event.preventDefault();
+
+  let formData = new FormData(createForm);
+
+  createFormValidate(formData)
+
+    .then((validationResult) => {
+      if (validationResult.valid) saveForm(formData)
+      else {
+        for (let field of createForm.elements) {
+
+          let text = validationResult.detail[field.name];
+
+          if (text) createInvalid(field.parentElement, text);
+        }
+      }
+    })
+    // .catch((error) => alert(error));
+
+}
+
+function saveForm(formData) {
+
+  let table = document.getElementById('user-courses');
   table.style.visibility = 'visible';
 
-  let form = document.forms['create-form'];
-  let title = form.elements[0];
-  let description = form.elements[1];
-  let type = form.elements[2];
+  let output = table.querySelector('tbody');
+  let template = document.getElementById('course-line');
+  let clone = template.content.cloneNode(true);
 
-  let tr = document.createElement('tr');
-
-  let td = document.createElement('td');
-  td.textContent = formCounter + 1;
-  tr.append(td);
-
-  td = document.createElement('td');
-  td.textContent = type.value;
-  tr.append(td);
-
-  td = document.createElement('td');
-  td.textContent = title.value;
-  tr.append(td);
-
-  td = document.createElement('td');
-  td.textContent = description.value;
-  tr.append(td);
-
-  table.append(tr);
+  fillTableRow(formData, clone);
+  output.append(clone);
 
   formCounter++;
-  form.reset();
+  createForm.reset();
+}
+
+function fillTableRow(formData, row) {
+
+  let tds = row.querySelectorAll('td');
+  let type = formData.get('type');
+  let title = formData.get('title');
+  let description = formData.get('description');
+
+
+  for (let td of tds) {
+    switch (td.dataset.name) {
+      case 'number':
+        td.textContent = formCounter + 1;
+        break;
+      case 'type':
+        td.textContent = type;
+        break;
+      case 'title':
+        td.textContent = title;
+        break;
+      case 'description':
+        td.textContent = description;
+        break;
+      default:
+        td.textContent = 'none';
+        break;
+    }
+  }
 }
 
 function resetApplication() {
-  document.forms['create-form'].reset();
-  let entries = document.querySelectorAll('.courses tr:nth-child(n + 2)');
+  createForm.reset();
+  let entries = document.querySelectorAll('#user-courses tr:nth-child(n + 2)');
   for (let entry of entries) { entry.remove(); }
 
-  currentPage.classList.remove('active-item');
-  currentPage = document.querySelector('.navbar-item');
-  currentPage.classList.add('active-item');
+  let page = document.querySelector('#navbar > button');
+  changeCurrentPage(page);
 
-  document.querySelector('.page-name').textContent = currentPage.dataset.name;
+  let pluses = document.querySelectorAll('#navbar output');
+  for (let plus of pluses) { plus.textContent = '' };
+
+  setPageTitle(currentPage.dataset.name);
   navigationHistory = [currentPage];
   formCounter = 0;
 
-  document.querySelector('table.courses').style.visibility = 'hidden';
+  document.getElementById('user-courses').style.visibility = 'hidden';
 }
 
-function selectType (event) {
+function selectType(event) {
   let type = event.target.value;
+  let titleOutput = createForm['title'].previousElementSibling.querySelector('output');
+  let descriptionOutput = createForm['description'].previousElementSibling.querySelector('output');
 
   switch (type) {
     case 'Computer Science':
-      document.querySelector('.title-label').textContent = 'Title*';
-      document.querySelector('.description-label').textContent = 'Description*';
+      titleOutput.textContent = '*';
+      descriptionOutput.textContent = "*";
       break;
     case 'Art':
-      document.querySelector('.title-label').textContent = 'Title*';
-      document.querySelector('.description-label').textContent = 'Description';
+      titleOutput.textContent = '*';
+      descriptionOutput.textContent = "";
       break;
     case 'Music':
-      document.querySelector('.title-label').textContent = 'Title';
-      document.querySelector('.description-label').textContent = 'Description*';
+      titleOutput.textContent = '';
+      descriptionOutput.textContent = "*";
       break
   }
 }

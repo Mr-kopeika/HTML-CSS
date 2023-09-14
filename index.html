@@ -8,53 +8,80 @@
   <link rel="stylesheet" href="./style/style.css">
 </head>
 
-<body class="wrapper">
-  <div class="sidebar">
+<body class="wrapper" id="wrapper">
+
+  <script defer type="module" src="./scripts/main.js"></script>
+
+  <div id="sidebar" class="sidebar">
     <div class="collapse-wrapper">
       <img class="logo-image" src="./images/logo-grambotica.svg" />
-      <button type="button" class="close-sidebar-button">
-        <img class="collapse-icon-close" src="./images/collapse-icon-close.svg" />
+      <button id="collapse-button" type="button" class="close-sidebar-button">
+        <a href="#wrapper" class="close-link">
+          <img class="collapse-icon-close" src="./images/collapse-icon-close.svg" />
+        </a>
+        <a href="#" class="unclose-link">
+          <img class="collapse-icon-close" src="./images/collapse-icon-close.svg" />
+        </a>
       </button>
     </div>
 
-    <nav>
+    <nav id="navbar">
       <button type="button" class="navbar-item active-item" data-name="Create Course">
-        Create Course</button>
-      <button type="button" class="navbar-item" data-name="Profile">Profile</button>
-      <button type="button" class="navbar-item" data-name="Statistics">Statistics</button>
-      <button type="button" class="navbar-item" data-name="Settings">Settings</button>
+        <img src="./images/circle.svg" alt="circle" />
+        <output></output>
+      </button>
+      <button type="button" class="navbar-item" data-name="Profile">
+        <img src="./images/circle.svg" alt="circle" />
+        <output></output>
+      </button>
+      <button type="button" class="navbar-item" data-name="Statistics">
+        <img src="./images/circle.svg" alt="circle" />
+        <output></output>
+      </button>
+      <button type="button" class="navbar-item" data-name="Settings">
+        <img src="./images/circle.svg" alt="circle" />
+        <output></output>
+      </button>
     </nav>
 
-    <button class="exit-button" type="button">Exit</button>
+    <button id="exit" class="exit-button" type="button" data-name="Exit"></button>
 
   </div>
 
   <header>
-    <button class="back" type="button">
+    <button id="back-button" class="back" type="button">
       <img src="./images/back-svgrepo-com.svg" alt="back" class="back-image">
       <span>Back</span>
     </button>
-    <h1 class="page-name">Create Course</h1>
+    <h1 id="page-title" class="page-name">Create Course</h1>
   </header>
 
   <main>
     <form class="create-form" name="create-form">
       <div class="title">
-        <label for="title-input" class="title-label">Title</label>
-        <input type="text" id="title-input" class="title-input">
+        <label for="title-input" class="title-label">
+          Title
+          <output></output>
+        </label>
+        <input name="title" type="text" id="title-input" class="title-input">
 
       </div>
 
       <div class="description">
-        <label for="description-input" class="description-label">Description</label>
-        <textarea id="description-input" class="description-input"></textarea>
+        <label for="description-input" class="description-label">
+          Description
+          <output></output>
+        </label>
+        <textarea name="description" id="description-input" class="description-input"></textarea>
         <div class="custom-resizer"></div>
 
       </div>
 
       <div class="type">
-        <label for="type-selector" class="type-label">Type</label>
-        <select id="type-selector" class="type-selector">
+        <label for="type-selector" class="type-label">
+          Type
+        </label>
+        <select name="type" id="type-selector" class="type-selector">
           <option>Computer Science</option>
           <option>Art</option>
           <option>Music</option>
@@ -64,24 +91,39 @@
       <hr />
 
       <div class="button-wrapper">
-        <button class="save-button" type="submit">Save</button>
+        <button name="save-button" class="save-button" type="submit">Save</button>
       </div>
     </form>
 
-    <table class="courses">
-      <tbody>
-        <tr>
-          <th class="number">№</th>
-          <th class="type">Type</th>
-          <th class="title">Title</th>
-          <th class="description">Description</th>
-        </tr>
-      </tbody>
-    </table>
+
+    <output>
+      <table id="user-courses" class="courses">
+        <thead>
+          <tr>
+            <th class="number">№</th>
+            <th class="type">Type</th>
+            <th class="title">Title</th>
+            <th class="description">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </output>
+
+
+    <template id="course-line">
+      <tr>
+        <td data-name="number"></td>
+        <td data-name="type"></td>
+        <td data-name="title"></td>
+        <td data-name="description"></td>
+      </tr>
+    </template>
 
   </main>
 
-  <script type="module" src="./scripts/main.js"></script>
+  
 
 </body>
 
