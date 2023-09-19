@@ -1,14 +1,22 @@
+interface ValidRes {
+  valid: boolean,
+  detail?: {
+    [index: string]: string,
+  }
+}
 
-async function createFormValidate(formData) {
 
-  const result = {
+
+async function createFormValidate(formData: FormData): Promise<ValidRes> {
+
+  const result: ValidRes = {
     valid: false,
     detail: {},
   };
 
-  let title = formData.get('title');
-  let description = formData.get('description');
-  let type = formData.get('type');
+  const title: FormDataEntryValue = formData.get('title');
+  const description: FormDataEntryValue = formData.get('description');
+  const type: FormDataEntryValue = formData.get('type');
 
   switch (type) {
     case 'Computer Science':
@@ -42,12 +50,14 @@ async function createFormValidate(formData) {
   else return result;
 }
 
-function setValidError(validationResult, field, message) {
+function setValidError(validationResult: ValidRes, field: string, message: string): void {
   validationResult.valid = false;
-  validationResult.detail[field] = message;
+  validationResult.detail 
+    ? validationResult.detail[field] = message
+    : validationResult.detail = {field: message};
 }
 
-function setValidAccess(validationResult) {
+function setValidAccess(validationResult: ValidRes): void {
   validationResult.valid = true;
   validationResult.detail = {};
 }

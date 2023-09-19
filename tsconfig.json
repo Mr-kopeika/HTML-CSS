@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": "dist/scripts",
+    "allowJs": true,
+    "target": "ES6",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "rootDir": "src/scripts",
+    "allowSyntheticDefaultImports": true,
+  },
+  "include": ["src/scripts/**/*"],
+}

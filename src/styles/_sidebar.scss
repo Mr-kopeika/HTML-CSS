@@ -1,7 +1,7 @@
 .wrapper {
 
-
   .sidebar {
+
     line-height: 50px;
     font-size: 22px;
     text-align: center;
@@ -64,7 +64,7 @@
         border: 1px solid rgb(113, 197, 197);
 
         &::after {
-          content: attr(data-name);
+          visibility: hidden;
         }
 
         img {
@@ -90,7 +90,7 @@
       background-color: rgb(152, 252, 252);
 
       &:after {
-        content: attr(data-name);
+        visibility: hidden;
       }
     }
   }
@@ -102,8 +102,11 @@
     }
   }
 
+  
+
   &:target {
 
+    
     --sidebar-width: 50px;
     .close-link {
       display: none;
@@ -121,12 +124,13 @@
   
       nav {
   
-        img, output {
+        img, output, span {
           display: none;
         }
   
         .navbar-item {
           &::after {
+            visibility: visible;
             content: '0';
           }
         }
@@ -140,7 +144,15 @@
         }
       }
 
+      .exit-button {
+
+        span {
+          display: none;
+        }
+      }
+
       .exit-button:after {
+        visibility: visible;
         content: 'E';
       }
     }

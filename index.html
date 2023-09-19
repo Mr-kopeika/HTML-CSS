@@ -5,55 +5,61 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grambotica</title>
-  <link rel="stylesheet" href="./style/style.css">
+  <link rel="stylesheet" href="./dist/styles/style.css">
 </head>
 
 <body class="wrapper" id="wrapper">
 
-  <script defer type="module" src="./scripts/main.js"></script>
+  <script defer type="module" src="./dist/scripts/main.js"></script>
 
   <div id="sidebar" class="sidebar">
     <div class="collapse-wrapper">
-      <img class="logo-image" src="./images/logo-grambotica.svg" />
+      <img class="logo-image" src="./src/images/logo-grambotica.svg" />
       <button id="collapse-button" type="button" class="close-sidebar-button">
         <a href="#wrapper" class="close-link">
-          <img class="collapse-icon-close" src="./images/collapse-icon-close.svg" />
+          <img class="collapse-icon-close" src="./src/images/collapse-icon-close.svg" />
         </a>
         <a href="#" class="unclose-link">
-          <img class="collapse-icon-close" src="./images/collapse-icon-close.svg" />
+          <img class="collapse-icon-close" src="./src/images/collapse-icon-close.svg" />
         </a>
       </button>
     </div>
 
     <nav id="navbar">
       <button type="button" class="navbar-item active-item" data-name="Create Course">
-        <img src="./images/circle.svg" alt="circle" />
+        <img src="./src/images/circle.svg" alt="circle" />
         <output></output>
+        <span>Create Course</span>
       </button>
       <button type="button" class="navbar-item" data-name="Profile">
-        <img src="./images/circle.svg" alt="circle" />
+        <img src="./src/images/circle.svg" alt="circle" />
         <output></output>
+        <span>Profile</span>
       </button>
       <button type="button" class="navbar-item" data-name="Statistics">
-        <img src="./images/circle.svg" alt="circle" />
+        <img src="./src/images/circle.svg" alt="circle" />
         <output></output>
+        <span>Statistics</span>
       </button>
       <button type="button" class="navbar-item" data-name="Settings">
-        <img src="./images/circle.svg" alt="circle" />
+        <img src="./src/images/circle.svg" alt="circle" />
         <output></output>
+        <span>Settings</span>
       </button>
     </nav>
 
-    <button id="exit" class="exit-button" type="button" data-name="Exit"></button>
+    <button id="exit" class="exit-button" type="button" data-name="Exit">
+      <span>Exit</span>
+    </button>
 
   </div>
 
   <header>
     <button id="back-button" class="back" type="button">
-      <img src="./images/back-svgrepo-com.svg" alt="back" class="back-image">
+      <img src="./src/images/back-svgrepo-com.svg" alt="back" class="back-image">
       <span>Back</span>
     </button>
-    <h1 id="page-title" class="page-name">Create Course</h1>
+    <output id="page-title" class="page-name">Create Course</output>
   </header>
 
   <main>

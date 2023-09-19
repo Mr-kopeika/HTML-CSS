@@ -49,7 +49,7 @@
   border: 1px solid rgb(113, 197, 197);
 }
 .wrapper .sidebar nav .navbar-item::after {
-  content: attr(data-name);
+  visibility: hidden;
 }
 .wrapper .sidebar nav .navbar-item img {
   width: 20px;
@@ -68,7 +68,7 @@
   background-color: rgb(152, 252, 252);
 }
 .wrapper .sidebar .exit-button:after {
-  content: attr(data-name);
+  visibility: hidden;
 }
 .wrapper .sidebar-close .logo-image {
   display: none;
@@ -85,10 +85,11 @@
 .wrapper:target .sidebar .logo-image {
   display: none;
 }
-.wrapper:target .sidebar nav img, .wrapper:target .sidebar nav output {
+.wrapper:target .sidebar nav img, .wrapper:target .sidebar nav output, .wrapper:target .sidebar nav span {
   display: none;
 }
 .wrapper:target .sidebar nav .navbar-item::after {
+  visibility: visible;
   content: "0";
 }
 .wrapper:target .sidebar nav .navbar-item:nth-child(n+1)::after {
@@ -103,7 +104,11 @@
 .wrapper:target .sidebar nav .navbar-item:nth-child(n+4)::after {
   content: "4";
 }
+.wrapper:target .sidebar .exit-button span {
+  display: none;
+}
 .wrapper:target .sidebar .exit-button:after {
+  visibility: visible;
   content: "E";
 }
 
@@ -215,10 +220,8 @@ main form > div .custom-resizer {
   pointer-events: none;
 }
 main form > div .type-selector {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  background-image: url(../images/back-down.svg);
+  appearance: none;
+  background-image: url(../../src/images/back-down.svg);
   background-repeat: no-repeat;
   background-size: 20px;
   background-position: calc(100% - 10px);
@@ -266,7 +269,7 @@ main form hr {
 
 @font-face {
   font-family: "Preahvihear";
-  src: url("../fonts/preahvihear.woff2") format("woff2"), url("../fonts/preahvihear.woff") format("woff"), url("../fonts/preahvihear.ttf") format("truetype");
+  src: url("../../src/fonts/preahvihear.woff2") format("woff2"), url("../../src/fonts/preahvihear.woff") format("woff"), url("../../src/fonts/preahvihear.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -303,4 +306,6 @@ button:active {
 }
 .wrapper .unclose-link {
   display: none;
-}/*# sourceMappingURL=style.css.map */
+}
+
+/*# sourceMappingURL=style.css.map */

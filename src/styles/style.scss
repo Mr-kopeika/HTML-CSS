@@ -1,8 +1,8 @@
 
-@use "mixins.scss";
-@use "sidebar.scss";
-@use "header.scss";
-@use "createCourseContent.scss";
+@use "_mixins.scss";
+@use "_sidebar.scss";
+@use "_header.scss";
+@use "_createCourseContent.scss";
 
 @include mixins.add-font('Preahvihear', 'preahvihear');
 
@@ -40,7 +40,6 @@ button {
   .unclose-link {
     display: none;
   }
-
 
   display: grid;
   grid-template: {
