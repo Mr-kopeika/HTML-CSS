@@ -1,40 +1,3 @@
-@font-face {
-  font-family: "Preahvihear";
-  src: url("../fonts/preahvihear.woff2") format("woff2"), url("../fonts/preahvihear.woff") format("woff"), url("../fonts/preahvihear.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-html {
-  --sidebar-width: 350px;
-  --header-height: 60px;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  font-family: "Preahvihear";
-}
-
-a:active,
-a:hover,
-a {
-  text-decoration: none;
-  color: black;
-}
-
-button:hover {
-  transform: scale(1.1);
-}
-button:active {
-  transform: scale(0.9);
-}
-
-.wrapper {
-  display: grid;
-  grid-template-columns: var(--sidebar-width) 1fr;
-  grid-template-rows: var(--header-height) 1fr;
-  grid-template-areas: "sidebar header" "sidebar content";
-}
 .wrapper .sidebar {
   line-height: 50px;
   font-size: 22px;
@@ -85,6 +48,13 @@ button:active {
   border-radius: 7px;
   border: 1px solid rgb(113, 197, 197);
 }
+.wrapper .sidebar nav .navbar-item::after {
+  visibility: hidden;
+}
+.wrapper .sidebar nav .navbar-item img {
+  width: 20px;
+  height: 20px;
+}
 .wrapper .sidebar nav .active-item {
   background-color: rgb(152, 252, 252);
 }
@@ -97,10 +67,52 @@ button:active {
   font-size: 22px;
   background-color: rgb(152, 252, 252);
 }
+.wrapper .sidebar .exit-button:after {
+  visibility: hidden;
+}
 .wrapper .sidebar-close .logo-image {
   display: none;
 }
-.wrapper header {
+.wrapper:target {
+  --sidebar-width: 50px;
+}
+.wrapper:target .close-link {
+  display: none;
+}
+.wrapper:target .unclose-link {
+  display: inline;
+}
+.wrapper:target .sidebar .logo-image {
+  display: none;
+}
+.wrapper:target .sidebar nav img, .wrapper:target .sidebar nav output, .wrapper:target .sidebar nav span {
+  display: none;
+}
+.wrapper:target .sidebar nav .navbar-item::after {
+  visibility: visible;
+  content: "0";
+}
+.wrapper:target .sidebar nav .navbar-item:nth-child(n+1)::after {
+  content: "1";
+}
+.wrapper:target .sidebar nav .navbar-item:nth-child(n+2)::after {
+  content: "2";
+}
+.wrapper:target .sidebar nav .navbar-item:nth-child(n+3)::after {
+  content: "3";
+}
+.wrapper:target .sidebar nav .navbar-item:nth-child(n+4)::after {
+  content: "4";
+}
+.wrapper:target .sidebar .exit-button span {
+  display: none;
+}
+.wrapper:target .sidebar .exit-button:after {
+  visibility: visible;
+  content: "E";
+}
+
+header {
   grid-area: header;
   background-color: rgb(159, 255, 255);
   border-bottom: 2px solid rgba(21, 63, 80, 0.548);
@@ -111,7 +123,7 @@ button:active {
   top: 0;
   z-index: 10;
 }
-.wrapper header .back {
+header .back {
   display: flex;
   align-items: center;
   position: absolute;
@@ -122,31 +134,32 @@ button:active {
   background: transparent;
   border: none;
 }
-.wrapper header .back .back-image {
+header .back .back-image {
   width: 20px;
 }
-.wrapper header .page-name,
-.wrapper header .back {
+header .page-name,
+header .back {
   font-size: 20px;
   font-weight: normal;
 }
-.wrapper main {
+
+main {
   grid-area: content;
 }
-.wrapper main form {
+main form {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   margin-top: 30px;
   min-width: 500px;
 }
-.wrapper main form .button-wrapper,
-.wrapper main form > div {
+main form .button-wrapper,
+main form > div {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 250px 1fr;
 }
-.wrapper main form .save-button {
+main form .save-button {
   grid-column-start: 2;
   grid-column-end: 2;
   width: 250px;
@@ -156,29 +169,29 @@ button:active {
   background-color: aquamarine;
   box-sizing: border-box;
 }
-.wrapper main form .description {
+main form .description {
   position: relative;
 }
-.wrapper main form > div {
+main form > div {
   padding-top: 20px;
 }
-.wrapper main form > div :first-child {
+main form > div :first-child {
   justify-self: end;
   margin-right: 10px;
 }
-.wrapper main form > div .invalid {
+main form > div .invalid {
   align-self: center;
   font-size: 14px;
   color: red;
   margin-left: 10px;
 }
-.wrapper main form > div .title-label,
-.wrapper main form > div .type-label {
+main form > div .title-label,
+main form > div .type-label {
   align-self: center;
 }
-.wrapper main form > div .title-input,
-.wrapper main form > div .description-input,
-.wrapper main form > div .type-selector {
+main form > div .title-input,
+main form > div .description-input,
+main form > div .type-selector {
   height: 40px;
   min-width: 250px;
   border: 1px solid black;
@@ -186,13 +199,13 @@ button:active {
   box-sizing: border-box;
   padding: 10px;
 }
-.wrapper main form > div textarea {
+main form > div textarea {
   resize: vertical;
 }
-.wrapper main form > div textarea::-webkit-resizer {
+main form > div textarea::-webkit-resizer {
   display: none;
 }
-.wrapper main form > div .custom-resizer {
+main form > div .custom-resizer {
   grid-column-start: 2;
   grid-column-end: 2;
   margin: 0;
@@ -206,28 +219,27 @@ button:active {
   right: 5px;
   pointer-events: none;
 }
-.wrapper main form > div .type-selector {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  background-image: url(../images/back-down.svg);
+main form > div .type-selector {
+  appearance: none;
+  background-image: url(../../src/images/back-down.svg);
   background-repeat: no-repeat;
   background-size: 20px;
   background-position: calc(100% - 10px);
 }
-.wrapper main form > div .description-input {
+main form > div .description-input {
   vertical-align: top;
   height: 120px;
   border-radius: 10px;
 }
-.wrapper main form > div .description-input ~ .invalid {
+main form > div .description-input ~ .invalid {
   align-self: start;
 }
-.wrapper main form hr {
+main form hr {
   width: 100%;
   margin: 50px 0;
 }
-.wrapper .courses {
+
+.courses {
   visibility: hidden;
   background-color: rgb(145, 218, 218);
   width: 70%;
@@ -237,20 +249,63 @@ button:active {
   border-radius: 5px;
   border-collapse: collapse;
 }
-.wrapper .courses .number {
+.courses .number {
   min-width: 20px;
 }
-.wrapper .courses .type {
+.courses .type {
   min-width: 100px;
 }
-.wrapper .courses .title {
+.courses .title {
   min-width: 150px;
 }
-.wrapper .courses th, .wrapper .courses td {
+.courses th, .courses td {
   border: 1px solid rgb(82, 133, 133);
   height: 30px;
   padding: 5px;
 }
-.wrapper .courses td {
+.courses td {
   vertical-align: top;
-}/*# sourceMappingURL=style.css.map */
+}
+
+@font-face {
+  font-family: "Preahvihear";
+  src: url("../../src/fonts/preahvihear.woff2") format("woff2"), url("../../src/fonts/preahvihear.woff") format("woff"), url("../../src/fonts/preahvihear.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+html {
+  --sidebar-width: 350px;
+  --header-height: 60px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Preahvihear";
+}
+
+a:active,
+a:hover,
+a {
+  text-decoration: none;
+  color: black;
+}
+
+button:hover {
+  transform: scale(1.04);
+}
+button:active {
+  transform: scale(0.96);
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-rows: var(--header-height) 1fr;
+  grid-template-areas: "sidebar header" "sidebar content";
+}
+.wrapper .unclose-link {
+  display: none;
+}
+
+/*# sourceMappingURL=style.css.map */
