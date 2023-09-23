@@ -1,22 +1,56 @@
-interface ValidRes {
+interface ValidRes<T> {
   valid: boolean,
-  detail?: {
-    [index: string]: string,
-  }
+  detail: T,
 }
 
+export enum Fields {
+  'type',
+  'title',
+  'description',
+}
 
+type Data = ComputerScience | Music | Art;
+type FieldName = keyof typeof Fields;
 
-async function createFormValidate(formData: FormData): Promise<ValidRes> {
+type ComputerScience = {
+  type: 'Computer Science',
+  title: string,
+  description: string,
+}
 
-  const result: ValidRes = {
-    valid: false,
+type Music = {
+  type: 'Music',
+  title?: string,
+  description: string,
+}
+
+type Art = {
+  type: 'Art',
+  title: string,
+  description?: string,
+}
+
+type InValid = {
+  type?: string,
+  title?: string,
+  description?: string,
+}
+
+type FormDataEntries = {
+  [key: string]: string | File,
+}
+
+export async function createFormValidate(formData: FormData): Promise<ValidRes<Data | InValid>> {
+
+  const result: ValidRes<Data | InValid> = {
+    valid: true,
     detail: {},
   };
 
-  const title: FormDataEntryValue = formData.get('title');
-  const description: FormDataEntryValue = formData.get('description');
-  const type: FormDataEntryValue = formData.get('type');
+
+  const title = formData.get('title');
+  const description = formData.get('description');
+  const type = formData.get('type');
 
   switch (type) {
     case 'Computer Science':
@@ -24,22 +58,22 @@ async function createFormValidate(formData: FormData): Promise<ValidRes> {
 
       if (!description) setValidError(result, 'description', 'Required!');
 
-      if (title && description) setValidAccess(result);
+      if (title && description) setValidAccess(result, formData);
       break;
 
     case 'Art':
       if (!title) setValidError(result, 'title', 'Required!')
-      else setValidAccess(result);
+      else setValidAccess(result, formData);
       break;
 
     case 'Music':
       if (!description) setValidError(result, 'description', 'Required!')
-      else setValidAccess(result);
+      else setValidAccess(result, formData);
       break;
 
     default:
       if (!type) setValidError(result, 'type', 'Please, choose a type!')
-      else setValidAccess(result);
+      else setValidAccess(result, formData);
   }
 
   await new Promise(resolve => { setTimeout(resolve, 2000) });
@@ -50,16 +84,28 @@ async function createFormValidate(formData: FormData): Promise<ValidRes> {
   else return result;
 }
 
-function setValidError(validationResult: ValidRes, field: string, message: string): void {
+function setValidError(validationResult: ValidRes<Data | InValid>, field: FieldName, message: string): void {
   validationResult.valid = false;
-  validationResult.detail 
-    ? validationResult.detail[field] = message
-    : validationResult.detail = {field: message};
+  validationResult.detail[field] = message;
 }
 
-function setValidAccess(validationResult: ValidRes): void {
+function setValidAccess(validationResult: ValidRes<Data | InValid>, formData: FormData): void {
   validationResult.valid = true;
-  validationResult.detail = {};
+
+  const detail: FormDataEntries = {};
+
+  for (const [key, value] of formData.entries()) {
+    if (isFields(key) && typeof value === 'string') {
+      validationResult.detail[key] = value;
+    }
+  }
+
 }
 
-export default createFormValidate;
+function isValid(obj: ValidRes<Data | InValid>): obj is ValidRes<Data> {
+  return obj.valid === true ? true : false;
+}
+
+export function isFields(arg: string): arg is FieldName {
+  return arg in Fields ? true : false;
+}

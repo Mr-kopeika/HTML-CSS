@@ -1,66 +1,111 @@
 'use strict';
 
-import createFormValidate from "./validation.js";
+import { createFormValidate, isFields } from "./validation.js";
+
+//мне не очень нравится, что enum и type Inputs создаются отдельно
+//но как создать Inputs из вот этих вот enum я не нашел
+enum FormElement {
+  '[object HTMLInputElement]',
+  '[object HTMLOutputElement]',
+  '[object HTMLButtonElement]',
+  '[object HTMLSelectElement]',
+  '[object HTMLTextAreaElement]',
+}
+type Inputs = HTMLInputElement | HTMLOutputElement |
+  HTMLButtonElement | HTMLSelectElement | HTMLTextAreaElement;
+
+type Constructor<T> = new (...args: any[]) => T;
 
 const activePage = 'active-item';
 
-let currentPage: HTMLButtonElement = document.querySelector('#navbar > button');
+
+let currentPage = correctType<HTMLButtonElement>(
+  document.querySelector('#navbar > button'),
+  HTMLButtonElement
+);
 const navigationHistory: HTMLButtonElement[] = [currentPage];
 let formCounter = 0;
 
-
-const navbar: HTMLElement = document.getElementById('navbar');
+const navbar = correctType(document.getElementById('navbar'), HTMLElement);
 navbar.addEventListener('click', changePage);
 
-const back = document.getElementById('back-button') as HTMLButtonElement;
+const back = correctType(document.getElementById('back-button'), HTMLButtonElement);
 back.addEventListener('click', backPage);
 
-const createForm = document.forms['create-form' as keyof typeof document.forms] as HTMLFormElement;
+const createForm = correctType(document.getElementById('create-form'), HTMLFormElement);
 createForm.addEventListener('submit', formSubmit);
 createForm.addEventListener('input', removeInvalid);
 
-const select: HTMLSelectElement = createForm['type'];
+const select = correctType(createForm['type'], HTMLSelectElement);
 select.addEventListener('change', selectType);
 
-const exitButton = document.getElementById('exit') as HTMLButtonElement;
+const exitButton = correctType(document.getElementById('exit'), HTMLButtonElement);
 exitButton.addEventListener('click', resetApplication);
-
-
 
 const selectEvent = new Event('change');
 select.dispatchEvent(selectEvent);
 
 
+function isType<T>(s: any, t: Constructor<T>, message?: string): s is T {
+  if (s instanceof t) return true;
+  else {
+    console.error('Error: ', message ? message : `${s} is not ${t}`);
+    return false;
+  }
+}
+
+function correctType<T>(s: any, t: Constructor<T>, message?: string): T {
+  if (s instanceof t) return s;
+  else {
+    throw new Error(message ? message : `${s} is not ${t}`);
+  }
+}
+
+function isNull(arg: any): arg is null | undefined {
+  if (arg == null) {
+    console.error(`${arg} is null or undefined`);
+    return true;
+  }
+  else return false;
+}
+
+function isFormElement(arg: any): arg is Inputs {
+  return (arg.toString() in FormElement) ? true : false;
+}
 
 function changeCurrentPage(page: HTMLButtonElement): void {
+
+  if (isNull(currentPage)) return;
   currentPage.classList.remove(activePage);
   currentPage = page;
   currentPage.classList.add(activePage);
 }
 
 function setPageTitle(title: string): void {
-  document.getElementById('page-title').textContent = title;
+  const pageTitle = document.getElementById('page-title');
+  if (isNull(pageTitle)) return;
+  pageTitle.textContent = title;
 }
 
 function changePage(event: Event): void {
 
-  const page: HTMLButtonElement = (event.target as HTMLElement).closest('button');
+  const target = correctType(event.target, Element);
 
+  const page = correctType(target.closest('button'), HTMLButtonElement);
 
-  //Существует, не текущая страница, находится внутри навигационной панели
-  if (!event.target
-    || !navbar.contains(page)) {
+  if (isNull(navbar) || isNull(navbar.contains(page))) {
     return;
   }
 
-  page.querySelector('output').textContent += '+';
+  const out = correctType(page.querySelector('output'), HTMLOutputElement);
+  out.textContent += '+';
 
-  if (page == currentPage) return;
+  if (isNull(currentPage) || isNull(page.dataset.name) || page == currentPage) return;
 
   setPageTitle(page.dataset.name);
   changeCurrentPage(page);
 
-
+  if (!isType(currentPage, HTMLButtonElement)) return;
   navigationHistory.push(currentPage);
 }
 
@@ -75,6 +120,7 @@ function backPage(): void {
   const page: HTMLButtonElement = navigationHistory[navigationHistory.length - 1];
 
   changeCurrentPage(page);
+  if (isNull(currentPage.dataset.name)) return;
   setPageTitle(currentPage.dataset.name);
 
   window.scrollTo(0, 0);
@@ -85,7 +131,8 @@ function createInvalid(element: Element, text: string): void {
 }
 
 function removeInvalid(): void {
-  const invalids: NodeListOf<HTMLParagraphElement>  = createForm.querySelectorAll('form label ~ p');
+  if (isNull(createForm)) return;
+  const invalids: NodeListOf<HTMLParagraphElement> = createForm.querySelectorAll('form label ~ p');
   for (let invalid of invalids) {
     invalid.remove();
   }
@@ -95,22 +142,30 @@ function formSubmit(event: Event): void {
 
   event.preventDefault();
 
+  if (!isType(createForm, HTMLFormElement)) return;
   const formData: FormData = new FormData(createForm);
 
   createFormValidate(formData)
 
     .then((validationResult) => {
-      if (validationResult.valid) saveForm(formData)
-      else {
-        for (let field of createForm.elements) {
 
-          const text: string = validationResult.detail[(field as HTMLInputElement).name];
+      if (validationResult.valid) {
+        saveForm(formData);
+        return;
+      }
 
-          if (text) createInvalid(field.parentElement, text);
+      for (let field of createForm.elements) {
+
+        if (isFormElement(field) && isFields(field.name)) {
+          let text = validationResult.detail[field.name];
+          if (!text) continue;
+          if (field.parentElement && field.parentElement.querySelector('p') == null) {
+            createInvalid(field.parentElement, text);
+          }
         }
       }
     })
-    // .catch((error) => alert(error));
+    .catch((error) => alert(error));
 }
 
 function saveForm(formData: FormData): void {
@@ -118,24 +173,28 @@ function saveForm(formData: FormData): void {
   const table = document.getElementById('user-courses') as HTMLTableElement;
   table.style.visibility = 'visible';
 
-  const output: HTMLTableSectionElement = table.querySelector('tbody');
-  const template = document.getElementById('course-line') as HTMLTemplateElement;
-  const clone: Node = (template as HTMLTemplateElement).content.cloneNode(true);
+  const output = correctType(table.querySelector('tbody'), HTMLTableSectionElement);
+  const template = correctType(document.getElementById('course-line'), HTMLTemplateElement);
+  const clone = correctType(template.content.cloneNode(true), DocumentFragment);
 
-  fillTableRow(formData, clone as HTMLTableRowElement);
+  fillTableRow(formData, clone);
   output.append(clone);
 
   formCounter++;
+  if (!isType(createForm, HTMLFormElement)) return;
+
   createForm.reset();
+  const selectEvent = new Event('change');
+  select.dispatchEvent(selectEvent);
 }
 
-function fillTableRow(formData: FormData, row: HTMLTableRowElement): void {
+function fillTableRow(formData: FormData, row: DocumentFragment): void {
 
   const tds: NodeListOf<HTMLTableCellElement> = row.querySelectorAll('td');
-  const type: FormDataEntryValue = formData.get('type');
-  const title: FormDataEntryValue = formData.get('title');
-  const description: FormDataEntryValue = formData.get('description');
-
+  const type = formData.get('type');
+  const title = formData.get('title');
+  const description = formData.get('description');
+  if (isNull(type) || isNull(title) || isNull(description)) return;
 
   for (let td of tds) {
     switch (td.dataset.name) {
@@ -159,28 +218,47 @@ function fillTableRow(formData: FormData, row: HTMLTableRowElement): void {
 }
 
 function resetApplication(): void {
+
+  if (!isType(createForm, HTMLFormElement)) return;
   createForm.reset();
   const entries: NodeListOf<HTMLTableRowElement> = document.querySelectorAll('#user-courses tr:nth-child(n + 2)');
   for (let entry of entries) { entry.remove(); }
 
-  const page: HTMLButtonElement = document.querySelector('#navbar > button');
+  const page: HTMLButtonElement | null = document.querySelector('#navbar > button');
+  if (!page) return;
   changeCurrentPage(page);
 
   const pluses: NodeListOf<HTMLOutputElement> = document.querySelectorAll('#navbar output');
   for (let plus of pluses) plus.textContent = '';
 
+  if (!currentPage.dataset.name) return;
   setPageTitle(currentPage.dataset.name);
   navigationHistory.length = 0;
   navigationHistory.push(currentPage);
   formCounter = 0;
 
-  document.getElementById('user-courses').style.visibility = 'hidden';
+
+  const table = document.getElementById('user-courses');
+  if (table) {
+    table.style.visibility = 'hidden';
+  }
 }
 
 function selectType(event: Event): void {
-  const type: string = (event.target as HTMLSelectElement).value;
-  const titleOutput: HTMLOutputElement = (createForm['title'] as any as HTMLInputElement).previousElementSibling.querySelector('output');
-  const descriptionOutput: HTMLOutputElement = (createForm['description'] as HTMLInputElement).previousElementSibling.querySelector('output');
+
+  const target = correctType(event.target, HTMLSelectElement);
+  const type: string = target.value;
+
+  if (!isType(createForm, HTMLFormElement)) return;
+
+  const titleInput = correctType(createForm['title'], HTMLInputElement);
+  const descriptionInput = correctType(createForm['description'], HTMLTextAreaElement);
+
+  const titleParent = correctType(titleInput.previousElementSibling, HTMLElement);
+  const descriptionParent = correctType(descriptionInput.previousElementSibling, HTMLElement);
+
+  const titleOutput = correctType(titleParent.querySelector('output'), HTMLOutputElement);
+  const descriptionOutput = correctType(descriptionParent.querySelector('output'), HTMLOutputElement);
 
   switch (type) {
     case 'Computer Science':

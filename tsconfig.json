@@ -5,6 +5,7 @@
     "target": "ES6",
     "sourceMap": true,
     "noImplicitAny": true,
+    "strictNullChecks": true,
     "rootDir": "src/scripts",
     "allowSyntheticDefaultImports": true,
   },
