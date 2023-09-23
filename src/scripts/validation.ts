@@ -36,10 +36,6 @@ type InValid = {
   description?: string,
 }
 
-type FormDataEntries = {
-  [key: string]: string | File,
-}
-
 export async function createFormValidate(formData: FormData): Promise<ValidRes<Data | InValid>> {
 
   const result: ValidRes<Data | InValid> = {
