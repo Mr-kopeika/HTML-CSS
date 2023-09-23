@@ -52,13 +52,19 @@ export async function createFormValidate(formData: FormData): Promise<ValidRes<D
   const description = formData.get('description');
   const type = formData.get('type');
 
+  if (type === 'Art') {
+    if (description) {
+      result
+    }
+  }
+
   switch (type) {
     case 'Computer Science':
       if (!title) setValidError(result, 'title', 'Required!');
 
       if (!description) setValidError(result, 'description', 'Required!');
 
-      if (title && description) setValidAccess(result, formData);
+      if (isValid(result)) setValidAccess(result, formData);
       break;
 
     case 'Art':
@@ -91,8 +97,6 @@ function setValidError(validationResult: ValidRes<Data | InValid>, field: FieldN
 
 function setValidAccess(validationResult: ValidRes<Data | InValid>, formData: FormData): void {
   validationResult.valid = true;
-
-  const detail: FormDataEntries = {};
 
   for (const [key, value] of formData.entries()) {
     if (isFields(key) && typeof value === 'string') {

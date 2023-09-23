@@ -22,13 +22,18 @@ export function createFormValidate(formData) {
         const title = formData.get('title');
         const description = formData.get('description');
         const type = formData.get('type');
+        if (type === 'Art') {
+            if (description) {
+                result;
+            }
+        }
         switch (type) {
             case 'Computer Science':
                 if (!title)
                     setValidError(result, 'title', 'Required!');
                 if (!description)
                     setValidError(result, 'description', 'Required!');
-                if (title && description)
+                if (isValid(result))
                     setValidAccess(result, formData);
                 break;
             case 'Art':
@@ -63,7 +68,6 @@ function setValidError(validationResult, field, message) {
 }
 function setValidAccess(validationResult, formData) {
     validationResult.valid = true;
-    const detail = {};
     for (const [key, value] of formData.entries()) {
         if (isFields(key) && typeof value === 'string') {
             validationResult.detail[key] = value;
