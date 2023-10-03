@@ -7,41 +7,52 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-function createFormValidate(formData) {
+export var Fields;
+(function (Fields) {
+    Fields[Fields["type"] = 0] = "type";
+    Fields[Fields["title"] = 1] = "title";
+    Fields[Fields["description"] = 2] = "description";
+})(Fields || (Fields = {}));
+export function createFormValidate(formData) {
     return __awaiter(this, void 0, void 0, function* () {
         const result = {
-            valid: false,
+            valid: true,
             detail: {},
         };
         const title = formData.get('title');
         const description = formData.get('description');
         const type = formData.get('type');
+        if (type === 'Art') {
+            if (description) {
+                result;
+            }
+        }
         switch (type) {
             case 'Computer Science':
                 if (!title)
                     setValidError(result, 'title', 'Required!');
                 if (!description)
                     setValidError(result, 'description', 'Required!');
-                if (title && description)
-                    setValidAccess(result);
+                if (isValid(result))
+                    setValidAccess(result, formData);
                 break;
             case 'Art':
                 if (!title)
                     setValidError(result, 'title', 'Required!');
                 else
-                    setValidAccess(result);
+                    setValidAccess(result, formData);
                 break;
             case 'Music':
                 if (!description)
                     setValidError(result, 'description', 'Required!');
                 else
-                    setValidAccess(result);
+                    setValidAccess(result, formData);
                 break;
             default:
                 if (!type)
                     setValidError(result, 'type', 'Please, choose a type!');
                 else
-                    setValidAccess(result);
+                    setValidAccess(result, formData);
         }
         yield new Promise(resolve => { setTimeout(resolve, 2000); });
         if (title === '111') {
@@ -53,13 +64,20 @@ function createFormValidate(formData) {
 }
 function setValidError(validationResult, field, message) {
     validationResult.valid = false;
-    validationResult.detail
-        ? validationResult.detail[field] = message
-        : validationResult.detail = { field: message };
+    validationResult.detail[field] = message;
 }
-function setValidAccess(validationResult) {
+function setValidAccess(validationResult, formData) {
     validationResult.valid = true;
-    validationResult.detail = {};
+    for (const [key, value] of formData.entries()) {
+        if (isFields(key) && typeof value === 'string') {
+            validationResult.detail[key] = value;
+        }
+    }
 }
-export default createFormValidate;
+function isValid(obj) {
+    return obj.valid === true ? true : false;
+}
+export function isFields(arg) {
+    return arg in Fields ? true : false;
+}
 //# sourceMappingURL=validation.js.map
