@@ -1,0 +1,166 @@
+main {
+  grid-area: content;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 30px;
+    min-width: 500px;
+
+    .button-wrapper,
+    >div {
+
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 250px 1fr;
+    }
+
+    .save-button {
+      grid-column-start: 2;
+      grid-column-end: 2;
+
+      width: 250px;
+      height: 40px;
+      border: 1px solid black;
+      border-radius: 7px;
+      background-color: aquamarine;
+      box-sizing: border-box;
+    }
+
+    .description {
+      position: relative;
+    }
+
+    > div {
+
+
+      padding-top: 20px;
+
+      :first-child {
+        justify-self: end;
+        margin-right: 10px;
+      }
+
+      .invalid {
+        align-self: center;
+
+        font-size: 14px;
+        color: red;
+        
+        margin-left: 10px;
+      }
+
+      .title-label,
+      .type-label {
+        align-self: center;
+      }
+
+      .title-input,
+      .description-input,
+      .type-selector {
+        height: 40px;
+        min-width: 250px;
+        border: 1px solid black;
+        border-radius: 7px;
+        box-sizing: border-box;
+        padding: 10px;
+      }
+
+      textarea {
+        resize: vertical;
+
+
+        &::-webkit-resizer {
+          display: none;
+
+        }
+      }
+
+      .custom-resizer {
+
+        grid-column-start: 2;
+        grid-column-end: 2;
+
+        margin: 0;
+        padding: 0;
+
+        width: 10px;
+        height: 10px;
+
+        background-color: rgb(161, 236, 211);
+        border-radius: 5px;
+
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+
+        pointer-events: none;
+      }
+
+      .type-selector {
+        appearance: none;
+
+        background: {
+          image: url(../../src/images/back-down.svg);
+          repeat: no-repeat;
+          size: 20px;
+          position: calc(100% - 10px);
+        }
+      }
+
+
+
+      .description-input {
+        vertical-align: top;
+        height: 120px;
+        border-radius: 10px;
+
+        ~ .invalid {
+          align-self: start;
+        }
+      }
+    }
+
+    hr {
+      width: 100%;
+      margin: 50px 0;
+    }
+
+  }
+}
+
+.courses {
+  visibility: hidden;
+  background-color: rgb(145, 218, 218);;
+  width: 70%;
+  max-width: 1200px;
+  margin: 50px auto;
+  border: 2px solid rgb(82, 133, 133);
+  border-radius: 5px;
+  border-collapse: collapse;
+
+
+  .number {
+    min-width: 20px;
+  }
+
+  .type {
+    min-width: 100px;
+  }
+
+  .title {
+    min-width: 150px;
+  }
+
+  th, td {
+    border: 1px solid rgb(82, 133, 133);
+    height: 30px;
+    padding: 5px;
+  }
+
+  td {
+    vertical-align: top;
+  }
+}
+

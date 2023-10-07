@@ -1,9 +1,10 @@
+
 @mixin add-font($font-name, $source, $font-weight: normal, $font-style: normal) {
   @font-face {
     font-family: $font-name;
-    src: url('../fonts/#{$source}.woff2') format('woff2'),
-      url('../fonts/#{$source}.woff') format('woff'),
-      url('../fonts/#{$source}.ttf') format('truetype');
+    src: url('/fonts/#{$source}.woff2') format('woff2'),
+      url('/fonts/#{$source}.woff') format('woff'),
+      url('/fonts/#{$source}.ttf') format('truetype');
     font-weight: $font-weight;
     font-style: $font-style;
   }

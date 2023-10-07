@@ -1,0 +1,31 @@
+.navbar-item {
+  font-size: 22px;
+  width: 80%;
+  height: 50px;
+  background-color: rgb(190, 255, 255);
+  border-radius: 7px;
+  border: 1px solid rgb(113, 197, 197);
+
+  &::after {
+    visibility: hidden;
+  }
+
+  a {
+
+    width: 100%;
+    height: 100%;
+    border-radius: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &.active {
+      background-color: rgb(152, 252, 252);
+    }
+
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}

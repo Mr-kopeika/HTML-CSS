@@ -1,0 +1,161 @@
+.wrapper {
+
+  .sidebar {
+
+    line-height: 50px;
+    font-size: 22px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 2px solid rgba(21, 63, 80, 0.548);
+    position: sticky;
+    top: 0;
+
+    grid-area: sidebar;
+    height: 100vh;
+    background-color: rgb(182, 248, 228);
+
+    .collapse-wrapper {
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 20px;
+      gap: 15px;
+      width: 80%;
+
+
+      .logo-image {
+        width: 70%;
+        margin: 0;
+      }
+
+      .close-sidebar-button {
+        height: 40px;
+        background-color: transparent;
+        border: none;
+        font-size: 22px;
+
+        .collapse-icon-close {
+          width: 40px;
+        }
+      }
+
+
+    }
+
+
+
+    nav {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      width: 100%;
+
+
+      .navbar-item {
+        font-size: 22px;
+        width: 80%;
+        height: 50px;
+        background-color: rgb(190, 255, 255);
+        border-radius: 7px;
+        border: 1px solid rgb(113, 197, 197);
+
+        &::after {
+          visibility: hidden;
+        }
+
+        img {
+          width: 20px;
+          height: 20px;
+
+          
+        }
+      }
+
+      .active-item {
+        background-color: rgb(152, 252, 252);
+      }
+    }
+
+    .exit-button {
+      width: 80%;
+      height: 50px;
+      margin: auto 0 calc((var(--sidebar-width) - 80%) / 2);
+      border-radius: 7px;
+      border: 1px solid rgb(113, 197, 197);
+      font-size: 22px;
+      background-color: rgb(152, 252, 252);
+
+      &:after {
+        visibility: hidden;
+      }
+    }
+  }
+
+  .sidebar-close {
+    
+    .logo-image {
+      display: none;
+    }
+  }
+
+  
+
+  &:target {
+
+    
+    --sidebar-width: 50px;
+    .close-link {
+      display: none;
+    }
+
+    .unclose-link {
+      display: inline;
+    }
+
+    .sidebar {
+
+      .logo-image {
+        display: none;
+      }
+  
+      nav {
+  
+        img, output, span {
+          display: none;
+        }
+  
+        .navbar-item {
+          &::after {
+            visibility: visible;
+            content: '0';
+          }
+        }
+  
+        @for $i from 1 through 4 {
+          .navbar-item:nth-child(n + #{$i}) {
+            &::after {
+              content: '#{$i}';
+            }
+          }
+        }
+      }
+
+      .exit-button {
+
+        span {
+          display: none;
+        }
+      }
+
+      .exit-button:after {
+        visibility: visible;
+        content: 'E';
+      }
+    }
+  }
+}
+

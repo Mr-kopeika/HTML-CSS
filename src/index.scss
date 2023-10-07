@@ -1,0 +1,29 @@
+@use "_mixins.scss";
+
+@include mixins.add-font('Preahvihear', 'preahvihear');
+
+
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Preahvihear';
+}
+
+a:active,
+a:hover,
+a {
+  text-decoration: none;
+  color: black;
+}
+
+button {
+  &:hover {
+    transform: scale(1.04);
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+  
+}
