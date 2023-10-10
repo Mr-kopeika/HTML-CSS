@@ -29,6 +29,7 @@ export const CreateForm: FC<CreateFormProps> = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
   } = useForm<ICreateFormInputs>();
   const onSubmit: SubmitHandler<ICreateFormInputs> = (data) => {
 
@@ -38,6 +39,7 @@ export const CreateForm: FC<CreateFormProps> = () => {
       type: data.type
     }
     if (context.addCourse) { context.addCourse(course) }
+    reset();
   };
 
   const watchType = watch('type', CourseTypeEnum['Computer Science']);
