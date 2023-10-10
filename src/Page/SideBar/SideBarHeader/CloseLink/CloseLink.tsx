@@ -1,5 +1,4 @@
 
-
 interface CloseLinkProps<T> {
   anchorElement: string,
   modifier: string,
@@ -15,7 +14,6 @@ export function CloseLink<T>(props: CloseLinkProps<T>) {
       data-modifier={props.modifier}
       onClick={() => {
         if (props.onClick != undefined && props.clickValue != undefined) {
-          console.log(props.clickValue);
           props.onClick(props.clickValue);
         }
       }}

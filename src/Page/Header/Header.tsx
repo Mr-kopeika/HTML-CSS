@@ -20,7 +20,6 @@ export const Header: FC<HeaderProps> = () => {
         onClick={() => {
           contextData.isClose = !contextData.isClose;
           const pastPage = contextData.history.pop();
-          console.log(pastPage);
           if (pastPage) navigate(pastPage);
         }}>
         <img src="/images/back-svgrepo-com.svg" alt="back" />

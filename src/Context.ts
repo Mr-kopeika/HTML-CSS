@@ -1,5 +1,10 @@
 import {createContext} from 'react'
 
+export type Course = {
+  title: string,
+  description: string,
+  type: string
+}
 
 interface IAppContext {
   login: boolean,
@@ -12,14 +17,18 @@ interface IAppContext {
   isClose: boolean,
   setClose?: (b: boolean) => void,
 
-  history: string[]
+  history: string[],
+
+  courses: Course[],
+  addCourse?: (c: Course) => void,
 }
 
 const value = {
   login: false,
   title: '',
   isClose: false,
-  history: []
+  history: [],
+  courses: []
 }
 
 export const AppContext = createContext<IAppContext>(value);

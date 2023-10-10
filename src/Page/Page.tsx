@@ -3,9 +3,9 @@ import classes from './Page.module.scss';
 import { Navigate, Outlet } from "react-router";
 import { Header, SideBar } from ".";
 import { AppContext } from "../Context";
+import { Course } from "../Context";
 
 interface PageProps {
-
 }
 
 export const Page: FC<PageProps> = () => {
@@ -14,13 +14,21 @@ export const Page: FC<PageProps> = () => {
   const [title, setTitle] = useState('Create Course');
   const [isClose, setClose] = useState(false);
   const [isDialogOpen, setDialogOpen] = useState(false);
+  const [courses, setCourses] = useState<Course[]>([]);
+
+  const addCourse = (c: Course) => {
+    setCourses([...courses, c]);
+  }
+
   const value = {
     login: contextData.login,
     title: title,
     setTitle: setTitle,
     isClose: isClose,
     setClose: setClose,
-    history: contextData.history
+    history: contextData.history,
+    courses: courses,
+    addCourse: addCourse,
   }
 
 

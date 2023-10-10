@@ -20,7 +20,6 @@ export const Login: FC<LoginProps> = () => {
   const clickHandler = () => {
     context.login = true;
     context.loginTime = new Date();
-    console.log(new Date());
   }
 
   return (

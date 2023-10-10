@@ -10,7 +10,8 @@ const value = {
   login: false,
   title: '',
   isClose: false,
-  history: []
+  history: [],
+  courses: []
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
