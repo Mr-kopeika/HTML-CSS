@@ -7,16 +7,18 @@ interface CreateFormProps {
 
 }
 
-enum CourseTypeEnum {
-  'Music' = "Music",
-  'Computer Science' = 'Computer Science',
-  'Art' = 'Art'
-}
-
 interface ICreateFormInputs {
   title: string
   description: string
   type: CourseTypeEnum
+}
+
+type ValidateFunc = () => boolean
+
+enum CourseTypeEnum {
+  'Music' = "Music",
+  'Computer Science' = 'Computer Science',
+  'Art' = 'Art'
 }
 
 export const CreateForm: FC<CreateFormProps> = () => {
@@ -35,9 +37,24 @@ export const CreateForm: FC<CreateFormProps> = () => {
       description: data.description,
       type: data.type
     }
-    if (context.addCourse) {context.addCourse(course)}
+    if (context.addCourse) { context.addCourse(course) }
   };
+
   const watchType = watch('type', CourseTypeEnum['Computer Science']);
+
+  const validateTitle: ValidateFunc = () => {
+    return (
+      watchType == CourseTypeEnum['Computer Science'] ||
+      watchType == CourseTypeEnum.Art
+    ) ? true : false
+  }
+  const validateDescription: ValidateFunc = () => {
+    return (
+      watchType == CourseTypeEnum['Computer Science'] ||
+      watchType == CourseTypeEnum.Music
+    ) ? true : false
+  }
+  const validateType: ValidateFunc = () => true;
 
 
   return (
@@ -47,10 +64,7 @@ export const CreateForm: FC<CreateFormProps> = () => {
         <p>Title</p>
         <input type='text' {...register('title', {
           required: {
-            value: (
-              watchType == CourseTypeEnum['Computer Science'] ||
-              watchType == CourseTypeEnum.Art
-            ) ? true : false,
+            value: validateTitle(),
             message: 'Required'
           }
         })}
@@ -62,10 +76,7 @@ export const CreateForm: FC<CreateFormProps> = () => {
         <p>Description</p>
         <textarea {...register('description', {
           required: {
-            value: (
-              watchType == CourseTypeEnum['Computer Science'] ||
-              watchType == CourseTypeEnum.Music
-            ) ? true : false,
+            value: validateDescription(),
             message: 'Required'
           }
         })}
@@ -76,7 +87,7 @@ export const CreateForm: FC<CreateFormProps> = () => {
 
       <label className={classes.type}>
         <p>Type</p>
-        <select {...register('type', { required: { value: true, message: 'Required' } })} >
+        <select {...register('type', { required: { value: validateType(), message: 'Required' } })} >
           <option value='Computer Science'>Computer Science</option>
           <option value='Art'>Art</option>
           <option value='Music'>Music</option>
