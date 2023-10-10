@@ -1,0 +1,93 @@
+.wrapper {
+
+  --sidebar-width: 350px;
+  --header-height: 60px;
+
+  display: grid;
+  grid-template: {
+    columns: var(--sidebar-width) 1fr;
+    rows: var(--header-height) 1fr;
+    areas: "sidebar header"
+      "sidebar content";
+  }
+
+  dialog {
+    top: 0;
+    z-index: 10;
+    padding: 15px;
+    margin: 50px auto;
+    background-color: rgba(255, 242, 127, 0.95);
+    border: 3px solid rgb(255, 184, 137);
+    border-radius: 15px;
+
+    p {
+      margin: 10px
+    }
+
+    p:last-child {
+      font-size: 13px;
+      text-align: end;
+    }
+  }
+
+  a[data-modifier="unclose-link"] {
+    display: none;
+  }
+
+
+  &:target {
+
+    
+    --sidebar-width: 50px;
+    
+    a[data-modifier="close-link"] {
+      display: none;
+    }
+
+    a[data-modifier="unclose-link"] {
+      display: inline;
+    }
+
+    > div:first-child {
+
+      > div:first-child > img {
+        display: none;
+      }
+  
+      nav {
+  
+        img, output, span {
+          display: none;
+        }
+  
+        > button {
+          a::after {
+            visibility: visible;
+            content: '0';
+          }
+        }
+  
+        @for $i from 1 through 4 {
+          > button:nth-child(n + #{$i}) {
+            a::after {
+              content: '#{$i}';
+            }
+          }
+        }
+      }
+
+      > button:last-child {
+
+        span {
+          display: none;
+        }
+      }
+
+      > button:last-child:after {
+        visibility: visible;
+        content: 'E';
+      }
+    }
+  }
+
+}

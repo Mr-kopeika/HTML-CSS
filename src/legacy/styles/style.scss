@@ -1,0 +1,52 @@
+
+// @use "_mixins.scss";
+// @use "_sidebar.scss";
+// @use "_header.scss";
+// @use "_createCourseContent.scss";
+
+// @include mixins.add-font('Preahvihear', 'preahvihear');
+
+// html {
+//   --sidebar-width: 350px;
+//   --header-height: 60px;
+// }
+
+// * {
+//   margin: 0;
+//   padding: 0;
+//   font-family: 'Preahvihear';
+// }
+
+// a:active,
+// a:hover,
+// a {
+//   text-decoration: none;
+//   color: black;
+// }
+
+// button {
+//   &:hover {
+//     transform: scale(1.04);
+//   }
+
+//   &:active {
+//     transform: scale(0.96);
+//   }
+  
+// }
+
+// .wrapper {
+
+  .unclose-link {
+    display: none;
+  }
+
+//   display: grid;
+//   grid-template: {
+//     columns: var(--sidebar-width) 1fr;
+//     rows: var(--header-height) 1fr;
+//     areas: "sidebar header"
+//       "sidebar content";
+//   }
+
+// }

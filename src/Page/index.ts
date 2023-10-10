@@ -1,0 +1,7 @@
+export {Page} from './Page'
+export * from './SideBar'
+export * from './CreateCourse'
+export * from './Header'
+export * from './Profile'
+export * from './Settings'
+export * from './Statistics'

@@ -1,0 +1,126 @@
+.create-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 30px;
+  min-width: 500px;
+
+  .save,
+  >label {
+
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 250px 1fr;
+  }
+
+  .save > button {
+    grid-column-start: 2;
+    grid-column-end: 2;
+
+    width: 250px;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 7px;
+    background-color: aquamarine;
+    box-sizing: border-box;
+  }
+
+  .description {
+    position: relative;
+  }
+
+  label {
+
+
+    padding-top: 20px;
+
+    :first-child {
+      justify-self: end;
+      margin-right: 10px;
+    }
+
+    .invalid {
+      align-self: center;
+
+      font-size: 14px;
+      color: red;
+      
+      margin-left: 10px;
+    }
+
+    input,
+    textarea,
+    select {
+      height: 40px;
+      min-width: 250px;
+      border: 1px solid black;
+      border-radius: 7px;
+      box-sizing: border-box;
+      padding: 10px;
+    }
+
+    textarea {
+      resize: vertical;
+      
+      &::-webkit-resizer {
+        display: none;
+
+      }
+    }
+
+    .resizer {
+
+      grid-column-start: 2;
+      grid-column-end: 2;
+
+      margin: 0;
+      padding: 0;
+
+      width: 10px;
+      height: 10px;
+
+      background-color: rgb(161, 236, 211);
+      border-radius: 5px;
+
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+
+      pointer-events: none;
+    }
+
+    select {
+      appearance: none;
+
+      background: {
+        image: url(/images/back-down.svg);
+        repeat: no-repeat;
+        size: 20px;
+        position: calc(100% - 10px);
+      }
+    }
+
+
+
+    textarea {
+      vertical-align: top;
+      height: 120px;
+      border-radius: 10px;
+
+      ~ .invalid {
+        align-self: start;
+      }
+    }
+  }
+
+  .title > :first-child,
+  .type > :first-child{
+    align-self: center;
+  }
+
+  hr {
+    width: 100%;
+    margin: 50px 0;
+  }
+
+}
