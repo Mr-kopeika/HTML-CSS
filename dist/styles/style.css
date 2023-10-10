@@ -1,0 +1,311 @@
+.wrapper .sidebar {
+  line-height: 50px;
+  font-size: 22px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 2px solid rgba(21, 63, 80, 0.548);
+  position: sticky;
+  top: 0;
+  grid-area: sidebar;
+  height: 100vh;
+  background-color: rgb(182, 248, 228);
+}
+.wrapper .sidebar .collapse-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px;
+  gap: 15px;
+  width: 80%;
+}
+.wrapper .sidebar .collapse-wrapper .logo-image {
+  width: 70%;
+  margin: 0;
+}
+.wrapper .sidebar .collapse-wrapper .close-sidebar-button {
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  font-size: 22px;
+}
+.wrapper .sidebar .collapse-wrapper .close-sidebar-button .collapse-icon-close {
+  width: 40px;
+}
+.wrapper .sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+}
+.wrapper .sidebar nav .navbar-item {
+  font-size: 22px;
+  width: 80%;
+  height: 50px;
+  background-color: rgb(190, 255, 255);
+  border-radius: 7px;
+  border: 1px solid rgb(113, 197, 197);
+}
+.wrapper .sidebar nav .navbar-item::after {
+  visibility: hidden;
+}
+.wrapper .sidebar nav .navbar-item img {
+  width: 20px;
+  height: 20px;
+}
+.wrapper .sidebar nav .active-item {
+  background-color: rgb(152, 252, 252);
+}
+.wrapper .sidebar .exit-button {
+  width: 80%;
+  height: 50px;
+  margin: auto 0 calc((var(--sidebar-width) - 80%) / 2);
+  border-radius: 7px;
+  border: 1px solid rgb(113, 197, 197);
+  font-size: 22px;
+  background-color: rgb(152, 252, 252);
+}
+.wrapper .sidebar .exit-button:after {
+  visibility: hidden;
+}
+.wrapper .sidebar-close .logo-image {
+  display: none;
+}
+.wrapper:target {
+  --sidebar-width: 50px;
+}
+.wrapper:target .close-link {
+  display: none;
+}
+.wrapper:target .unclose-link {
+  display: inline;
+}
+.wrapper:target .sidebar .logo-image {
+  display: none;
+}
+.wrapper:target .sidebar nav img, .wrapper:target .sidebar nav output, .wrapper:target .sidebar nav span {
+  display: none;
+}
+.wrapper:target .sidebar nav .navbar-item::after {
+  visibility: visible;
+  content: "0";
+}
+.wrapper:target .sidebar nav .navbar-item:nth-child(n+1)::after {
+  content: "1";
+}
+.wrapper:target .sidebar nav .navbar-item:nth-child(n+2)::after {
+  content: "2";
+}
+.wrapper:target .sidebar nav .navbar-item:nth-child(n+3)::after {
+  content: "3";
+}
+.wrapper:target .sidebar nav .navbar-item:nth-child(n+4)::after {
+  content: "4";
+}
+.wrapper:target .sidebar .exit-button span {
+  display: none;
+}
+.wrapper:target .sidebar .exit-button:after {
+  visibility: visible;
+  content: "E";
+}
+
+header {
+  grid-area: header;
+  background-color: rgb(159, 255, 255);
+  border-bottom: 2px solid rgba(21, 63, 80, 0.548);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+header .back {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  gap: 10px;
+  height: 100%;
+  padding: 0 20px;
+  background: transparent;
+  border: none;
+}
+header .back .back-image {
+  width: 20px;
+}
+header .page-name,
+header .back {
+  font-size: 20px;
+  font-weight: normal;
+}
+
+main {
+  grid-area: content;
+}
+main form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 30px;
+  min-width: 500px;
+}
+main form .button-wrapper,
+main form > div {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 250px 1fr;
+}
+main form .save-button {
+  grid-column-start: 2;
+  grid-column-end: 2;
+  width: 250px;
+  height: 40px;
+  border: 1px solid black;
+  border-radius: 7px;
+  background-color: aquamarine;
+  box-sizing: border-box;
+}
+main form .description {
+  position: relative;
+}
+main form > div {
+  padding-top: 20px;
+}
+main form > div :first-child {
+  justify-self: end;
+  margin-right: 10px;
+}
+main form > div .invalid {
+  align-self: center;
+  font-size: 14px;
+  color: red;
+  margin-left: 10px;
+}
+main form > div .title-label,
+main form > div .type-label {
+  align-self: center;
+}
+main form > div .title-input,
+main form > div .description-input,
+main form > div .type-selector {
+  height: 40px;
+  min-width: 250px;
+  border: 1px solid black;
+  border-radius: 7px;
+  box-sizing: border-box;
+  padding: 10px;
+}
+main form > div textarea {
+  resize: vertical;
+}
+main form > div textarea::-webkit-resizer {
+  display: none;
+}
+main form > div .custom-resizer {
+  grid-column-start: 2;
+  grid-column-end: 2;
+  margin: 0;
+  padding: 0;
+  width: 10px;
+  height: 10px;
+  background-color: rgb(161, 236, 211);
+  border-radius: 5px;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  pointer-events: none;
+}
+main form > div .type-selector {
+  appearance: none;
+  background-image: url(../../src/images/back-down.svg);
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-position: calc(100% - 10px);
+}
+main form > div .description-input {
+  vertical-align: top;
+  height: 120px;
+  border-radius: 10px;
+}
+main form > div .description-input ~ .invalid {
+  align-self: start;
+}
+main form hr {
+  width: 100%;
+  margin: 50px 0;
+}
+
+.courses {
+  visibility: hidden;
+  background-color: rgb(145, 218, 218);
+  width: 70%;
+  max-width: 1200px;
+  margin: 50px auto;
+  border: 2px solid rgb(82, 133, 133);
+  border-radius: 5px;
+  border-collapse: collapse;
+}
+.courses .number {
+  min-width: 20px;
+}
+.courses .type {
+  min-width: 100px;
+}
+.courses .title {
+  min-width: 150px;
+}
+.courses th, .courses td {
+  border: 1px solid rgb(82, 133, 133);
+  height: 30px;
+  padding: 5px;
+}
+.courses td {
+  vertical-align: top;
+}
+
+@font-face {
+  font-family: "Preahvihear";
+  src: url("../../src/fonts/preahvihear.woff2") format("woff2"), url("../../src/fonts/preahvihear.woff") format("woff"), url("../../src/fonts/preahvihear.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+html {
+  --sidebar-width: 350px;
+  --header-height: 60px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Preahvihear";
+}
+
+a:active,
+a:hover,
+a {
+  text-decoration: none;
+  color: black;
+}
+
+button:hover {
+  transform: scale(1.04);
+}
+button:active {
+  transform: scale(0.96);
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-rows: var(--header-height) 1fr;
+  grid-template-areas: "sidebar header" "sidebar content";
+}
+.wrapper .unclose-link {
+  display: none;
+}
+
+/*# sourceMappingURL=style.css.map */
